@@ -1,0 +1,108 @@
+#@ load("@ytt:data", "data")
+#@ load("@ytt:yaml", "yaml")
+
+---
+#@ def config():
+profile: full
+ceip_policy_disclosed: true #! Installation fails if this is set to 'false'
+cnrs:
+  domain_name: #@ data.values.tap.domains.base
+  ingress:
+    internal:
+      namespace: tanzu-system-ingress
+    external:
+      namespace: tanzu-system-ingress
+    reuse_crds: true
+buildservice:
+  kp_default_repository: #@ "{}/{}".format(data.values.tap.credentials.registry.host, data.values.tap.credentials.registry.repositories.buildService)
+  kp_default_repository_username: #@ data.values.tap.credentials.registry.username
+  kp_default_repository_password: #@ data.values.tap.credentials.registry.password
+  tanzunet_username: #@ data.values.tap.credentials.tanzuNet.username
+  tanzunet_password: #@ data.values.tap.credentials.tanzuNet.password
+  descriptor_name: lite
+  enable_automatic_dependency_updates: true
+supply_chain: basic
+shared:
+  ingress_domain: #@ data.values.tap.domains.base
+learningcenter:
+  ingressSecret: 
+    secretName:  learningcenter-cert-tls
+tap_gui:
+  service_type: ClusterIP
+  tls:
+    namespace: tap-install
+    secretName: tap-tls-secret
+  app_config:
+    supplyChain:
+      enablePlugin: true
+    app:
+        baseUrl: #@ "https://{}".format(data.values.tap.domains.tapGui)
+    catalog:
+        locations:
+        - type: url
+          target: #@ data.values.tap.catalog
+    backend:
+        baseUrl: #@ "https://{}".format(data.values.tap.domains.tapGui)
+        cors:
+            origin: #@ "https://{}".format(data.values.tap.domains.tapGui)
+grype:
+  targetImagePullSecret: registry-credentials
+  targetSourceSshSecret: git-ssh
+  namespace: tap-install
+  #! metadataStore:
+  #!  url: #@ "https://metadata-store." + data.values.tap.domains.metadata_store
+  #!  caSecret:
+  #!    name: store-ca-cert
+  #!    importFromNamespace: metadata-store-secrets
+  #!  authSecret:
+  #!    name: store-auth-token
+  #!    importFromNamespace: metadata-store-secrets
+ootb_supply_chain_basic:
+  registry:
+    server: #@ data.values.tap.credentials.supplychainregistry.host
+    repository: #@ data.values.tap.credentials.supplychainregistry.repositories.ootbSupplyChain
+  gitops:
+    ssh_secret: ""
+appliveview:
+  tls:
+    namespace: tap-install
+    #! Not consistent with others
+    secretName: tap-tls-secret
+metadata_store:
+  app_service_type: ClusterIP
+accelerator:
+  ingress:
+    enable_tls: true
+    include: true #! This should be able to be removed since I have shared.ingress_domain set above.  All others work, but for accelerator I had to explicitly set this
+  tls:
+    namespace: tap-install
+    secret_name: tap-tls-secret
+excluded_packages:
+- tap-gui.tanzu.vmware.com
+- learningcenter.tanzu.vmware.com
+- api-portal.tanzu.vmware.com
+- accelerator.apps.tanzu.vmware.com
+- workshops.learningcenter.tanzu.vmware.com
+- cert-manager.tanzu.vmware.com
+- contour.tanzu.vmware.com
+- sso.apps.tanzu.vmware.com
+- ootb-supply-chain-testing-scanning.tanzu.vmware.com
+- ootb-supply-chain-testing.tanzu.vmware.com
+package_overlays:
+- name:  cnrs
+  secrets:
+  - name: cnrs-network-config-overlay
+  - name: cnrs-certmanager-config-overlay
+#@ end
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: tap-values
+  namespace: tap-install
+  annotations:
+    kapp.k14s.io/change-rule: "delete after deleting tap"
+
+type: Opaque
+stringData:
+  values.yml: #@ yaml.encode(config())

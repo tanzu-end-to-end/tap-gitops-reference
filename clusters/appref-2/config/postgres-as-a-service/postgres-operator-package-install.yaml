@@ -1,0 +1,24 @@
+#@ load("@ytt:data", "data")
+
+---
+apiVersion: packaging.carvel.dev/v1alpha1
+kind: PackageInstall
+metadata:
+  name: postgres-operator
+  namespace: tap-install
+  annotations:
+    kapp.k14s.io/change-group: postgres-operator
+    kapp.k14s.io/change-rule.0: "upsert after upserting tds-repo"
+    kapp.k14s.io/change-rule.1: "upsert after upserting cert-manager"
+spec:
+  packageRef:
+    refName: postgres-operator.sql.tanzu.vmware.com
+    versionSelection:
+      constraints: #@ data.values.postgres_operator.version
+      prereleases: {}
+  serviceAccountName: tap-install-gitops-sa
+  values:
+  - secretRef:
+      name: postgres-operator-values
+
+

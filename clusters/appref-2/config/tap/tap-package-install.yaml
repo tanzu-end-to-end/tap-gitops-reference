@@ -1,0 +1,28 @@
+#@ load("@ytt:data", "data")
+
+---
+apiVersion: packaging.carvel.dev/v1alpha1
+kind: PackageInstall
+metadata:
+  name: tap
+  namespace: tap-install
+  annotations:
+    kapp.k14s.io/change-group: tap
+    kapp.k14s.io/change-rule.0: "upsert after upserting tap-install/tap-repo"
+    kapp.k14s.io/change-rule.1: "upsert after upserting cert-manager"
+    kapp.k14s.io/change-rule.2: "upsert after upserting externaldns"
+    kapp.k14s.io/change-rule.3: "upsert after upserting contour"
+    kapp.k14s.io/change-rule.4: "upsert after upserting tap/cnr-overlay"
+
+spec:
+  packageRef:
+    refName: tap.tanzu.vmware.com
+    versionSelection:
+      prereleases: {}
+      constraints: #@ data.values.tap.version
+  serviceAccountName: tap-install-gitops-sa
+  values:
+  - secretRef:
+      name: tap-values
+
+

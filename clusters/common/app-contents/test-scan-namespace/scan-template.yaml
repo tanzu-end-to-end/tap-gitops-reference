@@ -1,0 +1,140 @@
+#@ load("@ytt:data", "data")
+
+---
+apiVersion: scanning.apps.tanzu.vmware.com/v1beta1
+kind: ScanTemplate
+metadata:
+  name: blob-source-scan-template
+spec:
+  template:
+    containers:
+    - args:
+      - process
+      - -f
+      - /workspace
+      command:
+      - /aggregator
+      image: registry.tanzu.vmware.com/tanzu-application-platform/tap-packages@sha256:e952e77bf2ffc8263ea9fdfddbde78f31ea98255675ce085a32520a8bca266da
+      imagePullPolicy: IfNotPresent
+      name: summary
+      volumeMounts:
+      - mountPath: /workspace
+        name: workspace
+        readOnly: true
+    imagePullSecrets:
+    - name: scanner-secret-ref
+    initContainers:
+    - args:
+      - -c
+      - ./source/untar-gitrepository.sh $REPOSITORY /workspace
+      command:
+      - /bin/bash
+      image: registry.tanzu.vmware.com/tanzu-application-platform/tap-packages@sha256:42393c1b8c657e8e6125e71d38b8072a43a8d6003f66abb52eacdcce86645c5f
+      imagePullPolicy: IfNotPresent
+      name: repo
+      volumeMounts:
+      - mountPath: /workspace
+        name: workspace
+        readOnly: false
+    - args:
+      - -c
+      - ./source/scan-source.sh /workspace/source /workspace/scan.xml blob
+      command:
+      - /bin/bash
+      image: registry.tanzu.vmware.com/tanzu-application-platform/tap-packages@sha256:42393c1b8c657e8e6125e71d38b8072a43a8d6003f66abb52eacdcce86645c5f
+      imagePullPolicy: IfNotPresent
+      name: scan-plugin
+      resources:
+        limits:
+          cpu: 1000m
+        requests:
+          cpu: 250m
+          memory: 128Mi
+      volumeMounts:
+      - mountPath: /workspace
+        name: workspace
+        readOnly: false
+    - args:
+      - -c
+      - |
+        set -euo pipefail
+        if [[ -z ${METADATA_STORE_ACCESS_TOKEN:-""} ]]
+        then
+          METADATA_STORE_ACCESS_TOKEN=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)
+        fi
+        /insight config set-target $METADATA_STORE_URL --ca-cert /metadata-store/ca.crt --access-token $METADATA_STORE_ACCESS_TOKEN
+      command:
+      - bash
+      env:
+      - name: METADATA_STORE_URL
+        value: https://metadata-store-app.metadata-store.svc.cluster.local:8443
+      - name: METADATA_STORE_ACCESS_TOKEN
+        valueFrom:
+          secretKeyRef:
+            key: auth_token
+            name: store-auth-token
+      image: registry.tanzu.vmware.com/tanzu-application-platform/tap-packages@sha256:8754fc15868c9d7477cf8af2bfaeeb5b50dff5459732608de3d290ef33db088d
+      imagePullPolicy: IfNotPresent
+      name: metadata-store-plugin-config
+      volumeMounts:
+      - mountPath: /workspace
+        name: workspace
+        readOnly: false
+      - mountPath: /.config/tanzu/insight
+        name: insight-config
+        readOnly: false
+      - mountPath: /metadata-store
+        name: metadata-store-ca-cert
+        readOnly: true
+    - args:
+      - source
+      - add
+      - --cyclonedxtype
+      - xml
+      - --path
+      - /workspace/scan.xml
+      command:
+      - /send-scan-results.sh
+      image: registry.tanzu.vmware.com/tanzu-application-platform/tap-packages@sha256:8754fc15868c9d7477cf8af2bfaeeb5b50dff5459732608de3d290ef33db088d
+      imagePullPolicy: IfNotPresent
+      name: metadata-store-plugin
+      volumeMounts:
+      - mountPath: /workspace
+        name: workspace
+        readOnly: false
+      - mountPath: /.config/tanzu/insight
+        name: insight-config
+        readOnly: false
+    - args:
+      - check
+      - --policy
+      - $(POLICY)
+      - --scan-results
+      - /workspace/scan.xml
+      - --parser
+      - xml
+      - --format
+      - yaml
+      - --output
+      - /workspace/compliance-plugin/out.yaml
+      command:
+      - /compliance
+      image: registry.tanzu.vmware.com/tanzu-application-platform/tap-packages@sha256:f25a878d8c70474dfb18b18cd8314d0072f0cfed7f68b3b51a5f69c22728e6af
+      imagePullPolicy: IfNotPresent
+      name: compliance-plugin
+      volumeMounts:
+      - mountPath: /workspace
+        name: workspace
+        readOnly: false
+    restartPolicy: Never
+    securityContext:
+      runAsNonRoot: true
+    serviceAccountName: grype-scanner
+    volumes:
+    - emptyDir: {}
+      name: workspace
+    - emptyDir: {}
+      name: insight-config
+    - name: metadata-store-ca-cert
+      secret:
+        secretName: store-ca-cert

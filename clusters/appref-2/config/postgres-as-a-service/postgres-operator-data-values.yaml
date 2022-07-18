@@ -1,0 +1,19 @@
+#@ load("@ytt:data", "data")
+#@ load("@ytt:yaml", "yaml")
+
+---
+#@ def config():
+dockerRegistrySecretName: tap-registry
+#@ end
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: postgres-operator-values
+  namespace: tap-install
+  annotations:
+    kapp.k14s.io/change-rule: "delete after deleting postgres-operator"
+
+type: Opaque
+stringData:
+  values.yml: #@ yaml.encode(config())

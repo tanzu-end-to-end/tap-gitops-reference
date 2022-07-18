@@ -1,0 +1,27 @@
+#@ load("@ytt:data", "data")
+#@ load("@ytt:yaml", "yaml")
+---
+#@ def config():
+envoy:
+  service: 
+    type: LoadBalancer
+    externalTrafficPolicy: Local
+    annotations:
+      #@ if hasattr(data.values.tap.domains, "learningcenter"):
+      external-dns.alpha.kubernetes.io/hostname: #@ "*." + data.values.tap.domains.base + ",*." + data.values.tap.domains.learningcenter
+      #@ else:
+      external-dns.alpha.kubernetes.io/hostname: #@ "*." + data.values.tap.domains.base
+      #@ end
+#@ end
+---
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: contour-values
+  namespace: #@ data.values.contour.namespace
+  annotations:
+    kapp.k14s.io/change-rule.3: "delete after deleting contour"
+type: Opaque
+stringData:
+  values.yml: #@ yaml.encode(config())

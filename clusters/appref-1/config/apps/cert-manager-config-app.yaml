@@ -1,0 +1,27 @@
+#@ load("@ytt:data", "data")
+
+---
+apiVersion: kappctrl.k14s.io/v1alpha1
+kind: App
+metadata:
+  name: cert-manager-config-app
+  namespace: tap-install
+  annotations:
+    kapp.k14s.io/change-group: cert-manager-config-app/app
+    kapp.k14s.io/change-rule: "upsert after upserting cert-manager"
+spec:
+  serviceAccountName: tap-install-gitops-sa
+  syncPeriod: 1m
+  fetch:
+  - git:
+      url: #@ data.values.git.url
+      ref: #@ data.values.git.ref
+  template:
+  - ytt:
+      paths:
+      - clusters/appref-1/app-contents/certs
+      valuesFrom:
+      - secretRef:
+          name: tap-install-gitops
+  deploy:
+  - kapp: {}

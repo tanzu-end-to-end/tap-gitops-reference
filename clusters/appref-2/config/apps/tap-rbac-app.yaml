@@ -1,0 +1,24 @@
+#@ load("@ytt:data", "data")
+
+---
+apiVersion: kappctrl.k14s.io/v1alpha1
+kind: App
+metadata:
+  name: tap-rbac-app
+  namespace: tap-install
+spec:
+  serviceAccountName: tap-install-gitops-sa
+  syncPeriod: 1m
+  fetch:
+  - git:
+      url: #@ data.values.git.url
+      ref: #@ data.values.git.ref
+  template:
+  - ytt:
+      paths:
+      - clusters/appref-2/app-contents/tap
+      valuesFrom:
+      - secretRef:
+          name: tap-install-gitops
+  deploy:
+  - kapp: {}

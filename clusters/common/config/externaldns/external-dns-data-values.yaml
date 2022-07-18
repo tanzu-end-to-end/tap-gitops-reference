@@ -1,0 +1,47 @@
+
+#@ load("@ytt:data", "data")
+#@ load("@ytt:yaml", "yaml")
+---
+#@ def config():
+---
+
+namespace: tanzu-system-service-discovery
+
+deployment:
+  args:
+    - --source=service
+    - --source=ingress
+    - --source=contour-httpproxy 
+    - --policy=upsert-only 
+    - --registry=txt
+    - --txt-prefix=txt 
+    - --provider=aws
+    - --aws-zone-type=public 
+    - --aws-prefer-cname
+  env:
+    - name: AWS_ACCESS_KEY_ID
+      valueFrom:
+        secretKeyRef:
+          name: route53-credentials
+          key: aws_access_key_id
+    - name: AWS_SECRET_ACCESS_KEY
+      valueFrom:
+        secretKeyRef:
+          name: route53-credentials
+          key: aws_secret_access_key
+  securityContext: {}
+  volumeMounts: []
+  volumes: []
+#@ end
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: externaldns-values
+  namespace: #@ data.values.externaldns.namespace
+  annotations:
+    kapp.k14s.io/change-rule: "delete after deleting externaldns"
+
+type: Opaque
+stringData:
+  values.yml: #@ yaml.encode(config())

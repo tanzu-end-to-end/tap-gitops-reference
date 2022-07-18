@@ -1,0 +1,51 @@
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: service-instances
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: resource-claims-postgres
+  labels:
+    servicebinding.io/controller: "true"
+rules:
+  - apiGroups: ["sql.tanzu.vmware.com"]
+    resources: ["postgres"]
+    verbs: ["get", "list", "watch", "update"]
+
+---
+apiVersion: services.apps.tanzu.vmware.com/v1alpha1
+kind: ClusterInstanceClass
+metadata:
+  name: postgres
+spec:
+  description:
+    short: It's a Postgres DB!
+  pool:
+    group: sql.tanzu.vmware.com
+    kind: Postgres
+---
+apiVersion: services.apps.tanzu.vmware.com/v1alpha1
+kind: ResourceClaimPolicy
+metadata:
+  name: postgres-cross-namespace
+  namespace: service-instances
+spec:
+  consumingNamespaces:
+  - '*'
+  subject:
+    group: sql.tanzu.vmware.com
+    kind: Postgres
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: tap-registry
+  namespace: service-instances
+  annotations:
+    secretgen.carvel.dev/image-pull-secret: ""
+type: kubernetes.io/dockerconfigjson
+data:
+  .dockerconfigjson: e30K

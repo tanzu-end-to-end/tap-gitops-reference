@@ -1,0 +1,38 @@
+#@ load("@ytt:data", "data")
+
+---
+apiVersion: carto.run/v1alpha1
+kind: Workload
+metadata:
+  name: spring-petclinic
+  labels:
+    apps.tanzu.vmware.com/workload-type: web
+    app.kubernetes.io/part-of: spring-petclinic
+    apps.tanzu.vmware.com/has-tests: "true"
+  namespace: spring-petclinic
+spec:
+  build:
+    env:
+    #! Compensate for the fact that the project has both gradle and maven.  This helps coach buildpack to use gradle specifically.
+    - name: BP_GRADLE_BUILD_FILE
+      value: /foo
+  params:
+    - name: annotations
+      value:
+        autoscaling.knative.dev/minScale: "1"
+    - name: gitops_repository_name
+      value: "gitops-spring-petclinic"
+  source:
+    git:
+      url: https://github.com/spring-projects/spring-petclinic.git
+      ref:
+        branch: main
+  env:
+  - name: SPRING_PROFILES_ACTIVE
+    value: postgres
+  serviceClaims:
+  - name: db
+    ref:
+      apiVersion: services.apps.tanzu.vmware.com/v1alpha1
+      kind: ResourceClaim
+      name: petclinic-db

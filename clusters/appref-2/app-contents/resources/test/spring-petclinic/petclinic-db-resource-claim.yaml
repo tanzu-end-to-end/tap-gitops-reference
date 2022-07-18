@@ -1,0 +1,11 @@
+apiVersion: services.apps.tanzu.vmware.com/v1alpha1
+kind: ResourceClaim
+metadata:
+  name: petclinic-db
+  namespace: spring-petclinic
+spec:
+  ref:
+    apiVersion: sql.tanzu.vmware.com/v1
+    kind: Postgres
+    name: postgres-1
+    namespace: service-instances

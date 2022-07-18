@@ -1,0 +1,10 @@
+#@data/values
+
+#@overlay/match-child-defaults missing_ok=True
+---
+tap:
+  version: "1.2.0"
+  namespace: tap-install
+postgres_operator:
+  version: "1.7.3"
+  namespace: tap-install

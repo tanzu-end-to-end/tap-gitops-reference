@@ -1,0 +1,11 @@
+apiVersion: projectcontour.io/v1
+kind: TLSCertificateDelegation
+metadata:
+  name: tap-tls-secret
+  namespace: tap-install
+  annotations:
+spec:
+  delegations:
+    - secretName: tap-tls-secret
+      targetNamespaces:
+      - "*"

@@ -1,0 +1,46 @@
+
+#@ load("@ytt:overlay", "overlay")
+#@ load("@ytt:data", "data")
+
+#@ cluster_role = "tap-install-gitops-cluster-role"
+
+---
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: #@ cluster_role
+  annotations:
+    tkg.tanzu.vmware.com/tanzu-package: #@ cluster_role
+    kapp.k14s.io/change-group: tap-install-gitops/rbac
+    kapp.k14s.io/change-rule: "delete after deleting tap-install-gitops/app"
+rules:
+- apiGroups: ["*"]
+  resources: ["*"]
+  verbs: ["*"]
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: cluster-admin-cluster-role-binding-gitops
+  annotations:
+    tkg.tanzu.vmware.com/tanzu-package: #@ cluster_role
+    kapp.k14s.io/change-group: tap-install-gitops/rbac
+    kapp.k14s.io/change-rule: "delete after deleting tap-install-gitops/app"
+subjects:
+- kind: ServiceAccount
+  name: tap-install-gitops-sa
+  namespace: tap-install
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: tap-install-gitops-cluster-role
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: tap-install-gitops-sa
+  namespace: tap-install
+  annotations:
+    tkg.tanzu.vmware.com/tanzu-package: #@ cluster_role
+    kapp.k14s.io/change-group: tap-install-gitops/rbac
+    kapp.k14s.io/change-rule: "delete after deleting tap-install-gitops/app"

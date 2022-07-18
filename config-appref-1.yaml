@@ -1,0 +1,32 @@
+---
+catalog: https://github.com/tanzu-end-to-end/acme-catalog/blob/main/catalog-info.yaml
+git:
+  url: https://github.com/jeffellin/tap-gitops-reference
+  ref: origin/main
+paths:
+ - clusters/common/config
+ - clusters/appref-1/config
+tap:
+  cert:
+    cn: '*.appref1t.appref.end2end.link'
+  registry:
+    host: harbor.one.appref.end2end.link
+  supplychainregistry:
+    host: harbor.one.appref.end2end.link
+  base:
+    domain: appref1t.appref.end2end.link
+  tapgui:
+    domain: tap-gui.appref1t.appref.end2end.link
+  learningcenter:
+    domain: learningcenter.appref1t.appref.end2end.link
+  cnr:
+    domain: appref1.appref.end2end.link
+  accelerator:
+    domain: accelerator.appref1t.appref.end2end.link
+  metadata:
+    domain: metadata-store.appref1t.appref.end2end.link
+systems:
+  canary:
+    gitops_repo_url: ssh://git@github.com/jeffellin/gitops-hello
+  spring_petclinic:
+    gitops_repo_url: ssh://git@github.com/jeffellin/gitops-spring-petclinic

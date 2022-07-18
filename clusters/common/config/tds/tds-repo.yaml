@@ -1,0 +1,15 @@
+#@ load("@ytt:data", "data")
+---
+apiVersion: packaging.carvel.dev/v1alpha1
+kind: PackageRepository
+metadata:
+  name: tds
+  namespace: tap-install
+  annotations:
+    kapp.k14s.io/change-group: tds-repo
+spec:
+  fetch:
+    imgpkgBundle:
+      image: #@ "{}/packages-for-vmware-tanzu-data-services/tds-packages:{}".format(data.values.tap.credentials.tanzuNet.host, data.values.tds.version)
+      secretRef:
+        name: tap-registry

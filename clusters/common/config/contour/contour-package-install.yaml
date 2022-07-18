@@ -1,0 +1,21 @@
+#@ load("@ytt:data", "data")
+---
+apiVersion: packaging.carvel.dev/v1alpha1
+kind: PackageInstall
+metadata:
+  name: contour
+  namespace: #@ data.values.contour.namespace
+  annotations:
+    kapp.k14s.io/change-group: "contour"
+    kapp.k14s.io/change-rule.2: "upsert after upserting cert-manager"
+    kapp.k14s.io/change-rule.3: "delete after deleting tap"
+spec:
+  packageRef:
+    refName: contour.tanzu.vmware.com
+    versionSelection:
+      constraints: #@ str(data.values.contour.version)
+  serviceAccountName: tap-install-gitops-sa
+  values:
+  - secretRef:
+      name: contour-values
+

@@ -1,0 +1,30 @@
+#@ load("@ytt:data", "data")
+
+---
+apiVersion: kappctrl.k14s.io/v1alpha1
+kind: App
+metadata:
+  name: service-instances-app
+  namespace: tap-install
+  annotations:
+    kapp.k14s.io/change-group: service-instances-app
+    kapp.k14s.io/change-rule.1: "upsert after upserting cert-manager"
+    kapp.k14s.io/change-rule.2: "upsert after upserting tap"
+    kapp.k14s.io/change-rule.3: "upsert after upserting postgres-as-a-service-app"
+spec:
+  serviceAccountName: tap-install-gitops-sa
+  syncPeriod: 1m
+  fetch:
+  - git:
+      url: #@ data.values.git.url
+      ref: #@ data.values.git.ref
+  template:
+  - ytt:
+      paths:
+      - clusters/appref-2/app-contents/services
+      valuesFrom:
+      - secretRef:
+          name: tap-install-gitops
+  deploy:
+  - kapp: 
+      intoNs: service-instances

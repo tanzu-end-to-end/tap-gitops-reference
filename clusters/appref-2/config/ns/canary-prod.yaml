@@ -1,0 +1,29 @@
+#@ load("@ytt:data", "data")
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: canary-prod
+  labels:
+    networking.knative.dev/enableWildcardCert: "true"
+---
+apiVersion: kappctrl.k14s.io/v1alpha1
+kind: App
+metadata:
+  name: prod-ns-canary
+  namespace: tap-install
+spec:
+  serviceAccountName: tap-install-gitops-sa
+  syncPeriod: 1m
+  fetch:
+  - git:
+      url: #@ data.values.git.url
+      ref: #@ data.values.git.ref
+  template:
+  - ytt:
+      paths:
+      - clusters/common/app-contents/prod-namespace
+  deploy:
+  - kapp: 
+      intoNs: canary-prod

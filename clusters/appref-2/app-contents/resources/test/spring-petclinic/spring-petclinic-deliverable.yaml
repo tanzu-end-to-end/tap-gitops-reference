@@ -1,0 +1,25 @@
+#@ load("@ytt:data", "data")
+
+---
+apiVersion: carto.run/v1alpha1
+kind: Deliverable
+metadata:
+  labels:
+    app.kubernetes.io/component: deliverable
+    app.kubernetes.io/part-of: spring-petclinic
+    app.tanzu.vmware.com/deliverable-type: web
+    carto.run/supply-chain-name: source-test-scan-to-url
+    carto.run/workload-name: spring-petclinic
+    carto.run/workload-namespace: spring-petclinic
+  name: spring-petclinic
+  namespace: spring-petclinic
+spec:
+  params:
+  - name: gitops_ssh_secret
+    value: git-ssh
+  source:
+    git:
+      ref:
+        branch: test
+      url: #@ data.values.systems.spring_petclinic.gitops_repo_url
+    subPath: config/spring-petclinic/spring-petclinic
