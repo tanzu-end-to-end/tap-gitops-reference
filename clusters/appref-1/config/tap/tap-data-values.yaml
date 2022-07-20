@@ -88,7 +88,6 @@ ootb_supply_chain_testing_scanning:
     ssh_secret: git-ssh
     pull_request:
       server_kind: github
-      commit_branch: ""
       pull_request_title: Ready for review
       pull_request_body: Pull Request by TAP
 appliveview:
