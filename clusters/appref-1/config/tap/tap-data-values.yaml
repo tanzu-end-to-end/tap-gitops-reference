@@ -81,10 +81,16 @@ ootb_supply_chain_testing_scanning:
     server: #@ data.values.tap.credentials.supplychainregistry.host
     repository: #@ data.values.tap.credentials.supplychainregistry.repositories.ootbSupplyChain
   gitops:
+    commit_strategy: pull_request
     branch: test
     server_address: #@ data.values.tap.supply_chain.gitops.server_address
     repository_owner: #@ data.values.tap.supply_chain.gitops.repository_owner
     ssh_secret: git-ssh
+    pull_request:
+      server_kind: github
+      commit_branch: runtime
+      pull_request_title: Ready for review
+      pull_request_body: Pull Request by TAP
 appliveview:
   tls:
     namespace: tap-install
