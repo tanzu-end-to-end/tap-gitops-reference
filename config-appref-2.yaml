@@ -1,7 +1,7 @@
 ---
 catalog: https://github.com/jeffellin/tap-catalog/blob/main/catalog-info.yaml
 git:
-  url: https://github.com/jeffellin/tap-gitops-reference
+  url: https://github.com/tanzu-end-to-end/tap-gitops-reference
   ref: origin/main
 paths:
  - clusters/common/config
