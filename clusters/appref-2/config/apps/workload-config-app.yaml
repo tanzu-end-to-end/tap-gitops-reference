@@ -8,6 +8,8 @@ metadata:
   namespace: tap-install
   annotations:
     kapp.k14s.io/change-group: workload-config-app/app
+    kapp.k14s.io/change-rule.1: "delete before deleting tap"
+    kapp.k14s.io/change-rule.2: "upsert after upserting tap"
 spec:
   serviceAccountName: tap-install-gitops-sa
   syncPeriod: 1m
