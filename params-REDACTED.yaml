@@ -1,3 +1,7 @@
+auth:
+  clientId: okta-client-id
+  clientSecret: okta-client-secret
+  audience: https://dev-32828523.okta.com/
 clusters:
   view:
     tap_gui:
@@ -19,6 +23,12 @@ clusters:
 r53:
   secret_key: --REDACTED--
   access_key: --REDACTED--
+s3: 
+  bucket: name of s3 bucket
+  secret_key: account secret key
+  access_key: access key
+  region: us-east-1
+  
 tap:
   tanzunet:
     username: --REDACTED--
@@ -31,6 +41,10 @@ tap:
     password: --REDACTED--
 common:
   repos:
+    ssl:
+      host: https://github.com
+      user: <github user>
+      password: <token>
     ssh:
       host: github.com
       privatekey: |
