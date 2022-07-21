@@ -30,11 +30,11 @@ tap_gui:
       publisher:
         type: 'awsS3'
         awsS3:
-          bucketName: #@ data.values.r53.bucket
+          bucketName: #@ data.values.aws.s3.bucket
           credentials:
-            accessKeyId: #@ data.values.r53.access_key
-            secretAccessKey: #@ data.values.r53.secret_access_key
-          region: #@ data.values.r53.regions
+            accessKeyId: #@ data.values.aws.s3.access_key
+            secretAccessKey: #@ data.values.aws.s3.secret_access_key
+          region: #@ data.values.aws.s3.regions
           s3ForcePathStyle: false
     supplyChain:
       enablePlugin: true
