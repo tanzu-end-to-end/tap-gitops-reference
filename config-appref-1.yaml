@@ -27,6 +27,6 @@ tap:
     domain: metadata-store.appref1t.appref.end2end.link
 systems:
   canary:
-    gitops_repo_url: ssh://git@github.com/jeffellin/gitops-hello
+    gitops_repo_url: https://github.com/jeffellin/gitops-hello
   spring_petclinic:
-    gitops_repo_url: ssh://git@github.com/jeffellin/gitops-spring-petclinic
+    gitops_repo_url: https://github.com/jeffellin/gitops-spring-petclinic
