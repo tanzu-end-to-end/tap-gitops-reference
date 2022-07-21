@@ -34,7 +34,7 @@ tap_gui:
           credentials:
             accessKeyId: #@ data.values.aws.s3.access_key
             secretAccessKey: #@ data.values.aws.s3.secret_key
-          region: #@ data.values.aws.s3.regions
+          region: #@ data.values.aws.s3.region
           s3ForcePathStyle: false
     supplyChain:
       enablePlugin: true
