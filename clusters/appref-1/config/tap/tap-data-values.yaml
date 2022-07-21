@@ -29,9 +29,10 @@ tap_gui:
       environment: development
       providers:
         okta:
-          clientId: #@ data.values.auth.clientId
-          clientSecret: #@ data.values.auth.clientSecret
-          audience: #@ data.values.auth.audience
+          development:
+            clientId: #@ data.values.auth.clientId
+            clientSecret: #@ data.values.auth.clientSecret
+            audience: #@ data.values.auth.audience
     techdocs:
       builder: 'external'
       publisher:
