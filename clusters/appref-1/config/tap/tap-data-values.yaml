@@ -25,6 +25,17 @@ tap_gui:
     namespace: tap-install
     secretName: tap-tls-secret
   app_config:
+    techdocs:
+      builder: 'external'
+      publisher:
+        type: 'awsS3'
+        awsS3:
+          bucketName: #@ data.values.r53.bucket
+          credentials:
+            accessKeyId: #@ data.values.r53.access_key
+            secretAccessKey: #@ data.values.r53.secret_access_key
+          region: #@ data.values.r53.regions
+          s3ForcePathStyle: false
     supplyChain:
       enablePlugin: true
     proxy:
