@@ -16,6 +16,6 @@ spec:
       value: "gitops-hello"
   source:
     git:
-      url: ssh://git@github.com/jeffellin/tanzu-java-web-app.git
+      url: https://github.com/jeffellin/tanzu-java-web-app.git
       ref:
         branch: main
