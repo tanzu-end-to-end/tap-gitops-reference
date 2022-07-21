@@ -29,7 +29,7 @@ tap_gui:
       environment: development
       providers:
         okta:
-          clientId: #@ data.value.auth.clientId
+          clientId: #@ data.values.auth.clientId
           clientSecret: #@ data.values.auth.clientSecret
           audience: #@ data.values.auth.audience
     techdocs:
