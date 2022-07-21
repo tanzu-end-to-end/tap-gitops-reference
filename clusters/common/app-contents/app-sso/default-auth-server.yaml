@@ -1,0 +1,15 @@
+#@ load("@ytt:data", "data")
+
+---
+apiVersion: secretgen.k14s.io/v1alpha1
+kind: RSAKey
+metadata:
+ name: default-auth-server-signing-key
+ namespace: service-instances
+spec:
+ secretTemplate:
+   type: Opaque
+   stringData:
+     key.pem: $(privateKey)
+     pub.pem: $(publicKey)
+     
