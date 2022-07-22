@@ -32,7 +32,7 @@ spec:
               MVNW=mvnw
               GRADLE="build.gradle"
               if [ -f "$MVNW" ]; then
-                  ./mnvw test
+                  ./mvnw test
               elif [ -f "$GRADLE" ]; then
                   gradle test --debug
               else 
