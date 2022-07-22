@@ -130,7 +130,6 @@ excluded_packages:
 - cert-manager.tanzu.vmware.com
 - contour.tanzu.vmware.com
 - connector.appliveview.tanzu.vmware.com
-- sso.apps.tanzu.vmware.com
 - cnrs.tanzu.vmware.com
 - image-policy-webhook.signing.apps.tanzu.vmware.com
 - policy.apps.tanzu.vmware.com
