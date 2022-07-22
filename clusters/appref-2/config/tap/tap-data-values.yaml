@@ -33,7 +33,7 @@ tap_gui:
     namespace: tap-install
     secretName: tap-tls-secret
   app_config:
-     auth:
+    auth:
       environment: development
       providers:
         okta:
