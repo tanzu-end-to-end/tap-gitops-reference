@@ -48,7 +48,7 @@ spec:
           - profile
           - email
           - groups
-          - animals.adopt
+         #!  - animals.adopt
         claimMappings:
           roles: groups
   replicas: 1

@@ -33,6 +33,14 @@ tap_gui:
     namespace: tap-install
     secretName: tap-tls-secret
   app_config:
+     auth:
+      environment: development
+      providers:
+        okta:
+          development:
+            clientId: #@ data.values.auth.clientId
+            clientSecret: #@ data.values.auth.clientSecret
+            audience: #@ data.values.auth.audience
     supplyChain:
       enablePlugin: true
     app:
