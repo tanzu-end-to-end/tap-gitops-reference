@@ -20,5 +20,8 @@ spec:
   - ytt:
       paths:
       - clusters/common/app-contents/app-sso
+      valuesFrom:
+      - secretRef:
+          name: tap-install-gitops
   deploy:
   - kapp: {}
