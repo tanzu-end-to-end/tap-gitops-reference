@@ -85,7 +85,6 @@ excluded_packages:
 - workshops.learningcenter.tanzu.vmware.com
 - cert-manager.tanzu.vmware.com
 - contour.tanzu.vmware.com
-- sso.apps.tanzu.vmware.com
 - ootb-supply-chain-testing-scanning.tanzu.vmware.com
 - ootb-supply-chain-testing.tanzu.vmware.com
 package_overlays:
