@@ -1,0 +1,25 @@
+#@ load("@ytt:data", "data")
+
+---
+apiVersion: carto.run/v1alpha1
+kind: Deliverable
+metadata:
+  labels:
+    app.kubernetes.io/component: deliverable
+    app.kubernetes.io/part-of: appsso-starter-java
+    app.tanzu.vmware.com/deliverable-type: web
+    carto.run/supply-chain-name: source-test-scan-to-url
+    carto.run/workload-name: appsso-starter-java
+    carto.run/workload-namespace: canary-test
+  name: appsso-starter-java
+  namespace: canary-test
+spec:
+  params:
+  - name: gitops_ssh_secret
+    value: git-ssh
+  source:
+    git:
+      ref:
+        branch: test
+      url: #@ data.values.systems.canary.gitops_repo_url
+    subPath: config/canary/appsso-starter-java
