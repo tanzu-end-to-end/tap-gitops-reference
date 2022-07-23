@@ -96,6 +96,9 @@ excluded_packages:
 - ootb-supply-chain-testing-scanning.tanzu.vmware.com
 - ootb-supply-chain-testing.tanzu.vmware.com
 package_overlays:
+- name: ootb-templates
+  secrets:
+  - name: honor-deliverable-subpath-overlay
 - name:  cnrs
   secrets:
   - name: cnrs-network-config-overlay
