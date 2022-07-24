@@ -103,6 +103,9 @@ package_overlays:
   secrets:
   - name: cnrs-network-config-overlay
   - name: cnrs-certmanager-config-overlay
+- name:  tap-gui
+  secrets:
+  - name: cluster-viewer-config-overlay
 #@ end
 ---
 apiVersion: v1
