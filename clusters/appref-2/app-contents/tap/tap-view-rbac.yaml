@@ -78,6 +78,10 @@ rules:
   resources:
   - podintents
   verbs: ['get', 'watch', 'list']
+- apiGroups: ['source.apps.tanzu.vmware.com']
+  resources:
+  - mavenartifacts
+  verbs: ['get', 'watch', 'list']
 - apiGroups: ['kpack.io']
   resources:
   - images
