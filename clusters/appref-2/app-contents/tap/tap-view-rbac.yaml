@@ -74,7 +74,7 @@ rules:
   resources:
   - imagerepositories
   verbs: ['get', 'watch', 'list']
-- apiGroups: ['conventions.carto.run']
+- apiGroups: ['conventions.apps.tanzu.vmware.com']
   resources:
   - podintents
   verbs: ['get', 'watch', 'list']
