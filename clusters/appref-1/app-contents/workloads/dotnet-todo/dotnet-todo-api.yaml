@@ -17,6 +17,16 @@ spec:
         autoscaling.knative.dev/minScale: "1"
     - name: gitops_repository_name
       value: "gitops-dotnet-todos-api"
+    - name: clusterBuilder
+      value: full
+  build:
+    env:
+    - name: BP_NODE_RUN_SCRIPTS
+      value: build
+    - name: BP_WEB_SERVER
+      value: nginx
+    - name: BP_WEB_SERVER_ROOT
+      value: dist
   source:
     git:
       url: https://github.com/jeffellin/dotnet-employee-todo-list-api.git
