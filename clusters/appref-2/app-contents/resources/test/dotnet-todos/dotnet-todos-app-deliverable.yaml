@@ -6,12 +6,12 @@ kind: Deliverable
 metadata:
   labels:
     app.kubernetes.io/component: deliverable
-    app.kubernetes.io/part-of: dotnet-todos
+    app.kubernetes.io/part-of: dotnet-todos 
     app.tanzu.vmware.com/deliverable-type: web
     carto.run/supply-chain-name: source-test-scan-to-url
-    carto.run/workload-name: dotnet-todos-api
-    carto.run/workload-namespace: dotnet-todos-api
-  name: dotnet-todo-api
+    carto.run/workload-name: dotnet-todos-app
+    carto.run/workload-namespace: dotnet-todos-app
+  name: dotnet-todo-app
   namespace: dotnet-todos-test
 spec:
   params:
@@ -22,4 +22,4 @@ spec:
       ref:
         branch: test
       url: https://github.com/jeffellin/gitops-dotnet-todos
-    subPath: config/dotnet-todos/dotnet-todos-api
+    subPath: config/dotnet-todos/dotnet-todos-app
