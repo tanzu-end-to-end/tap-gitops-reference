@@ -22,4 +22,4 @@ spec:
       ref:
         branch: test
       url: https://github.com/jeffellin/gitops-dotnet-todos
-    subPath: config/dotnet-todos-app/dotnet-todos-app
+    subPath: config/dotnet-todos/dotnet-todos-app
