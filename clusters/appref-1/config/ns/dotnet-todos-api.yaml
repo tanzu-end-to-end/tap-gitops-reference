@@ -24,6 +24,7 @@ spec:
   - ytt:
       paths:
       - clusters/common/app-contents/dev-namespace
+      - clusters/common/app-contents/test-scan-namespace
   deploy:
   - kapp: 
       intoNs: dotnet-todos-api
