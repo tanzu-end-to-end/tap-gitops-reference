@@ -7,7 +7,7 @@ profile: full
 ceip_policy_disclosed: true #! Installation fails if this is set to 'false'
 appliveview_connector:
   backend:
-    host: #@ data.values.tap.appliveview_connector
+    host: appliveview.appref1t.appref.end2end.link
 cnrs:
   domain_name: #@ data.values.tap.domains.base
   ingress:
