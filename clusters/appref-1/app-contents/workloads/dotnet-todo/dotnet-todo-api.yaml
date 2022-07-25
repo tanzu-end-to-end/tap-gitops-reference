@@ -9,7 +9,7 @@ metadata:
     apps.tanzu.vmware.com/workload-type: web
     app.kubernetes.io/part-of: dotnet-todos-app
     apps.tanzu.vmware.com/has-tests: "true"
-  namespace: dotnet-todos-app
+  namespace: dotnet-todos
 spec:
   params:
     - name: annotations
