@@ -12,7 +12,7 @@ metadata:
     carto.run/workload-name: dotnet-todos-api
     carto.run/workload-namespace: dotnet-todos-api
   name: dotnet-todo-api
-  namespace: dotnet-todo
+  namespace: dotnet-todos-test
 spec:
   params:
   - name: gitops_ssh_secret
