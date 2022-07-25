@@ -30,6 +30,7 @@ tap_gui:
     secretName: tap-tls-secret
   app_config:
     auth:
+      allowGuestAccess: true
       environment: development
       providers:
         okta:
