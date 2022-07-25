@@ -1,7 +1,7 @@
 #@ load("@ytt:data", "data")
 
 ---
-appVersion: carto.run/v1alpha1
+apiVersion: carto.run/v1alpha1
 kind: Workload
 metadata:
   name: dotnet-todos-app
