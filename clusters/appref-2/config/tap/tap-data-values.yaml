@@ -5,6 +5,9 @@
 #@ def config():
 profile: full
 ceip_policy_disclosed: true #! Installation fails if this is set to 'false'
+appliveview_connector:
+  backend:
+    host: #@ data.values.tap.appliveview_connector
 cnrs:
   domain_name: #@ data.values.tap.domains.base
   ingress:
