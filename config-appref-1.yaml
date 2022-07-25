@@ -15,6 +15,8 @@ tap:
     host: harbor.one.appref.end2end.link
   base:
     domain: appref1t.appref.end2end.link
+  view:
+    domain: appref1t.appref.end2end.link
   tapgui:
     domain: tap-gui.appref1t.appref.end2end.link
   learningcenter:
