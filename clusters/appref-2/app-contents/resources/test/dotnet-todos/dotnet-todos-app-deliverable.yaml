@@ -6,7 +6,7 @@ kind: Deliverable
 metadata:
   labels:
     app.kubernetes.io/component: deliverable
-    app.kubernetes.io/part-of: dotnet-todos 
+    app.kubernetes.io/part-of: dotnet-todos-app 
     app.tanzu.vmware.com/deliverable-type: web
     carto.run/supply-chain-name: source-test-scan-to-url
     carto.run/workload-name: dotnet-todos-app
