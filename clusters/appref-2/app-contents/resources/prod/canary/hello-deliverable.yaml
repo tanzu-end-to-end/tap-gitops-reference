@@ -10,7 +10,7 @@ metadata:
     app.tanzu.vmware.com/deliverable-type: web
     carto.run/supply-chain-name: source-test-scan-to-url
     carto.run/workload-name: hello
-    carto.run/workload-namespace: canary-prod
+    carto.run/workload-namespace: canary
   name: hello
   namespace: canary-prod
 spec:
