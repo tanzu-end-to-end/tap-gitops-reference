@@ -11,7 +11,7 @@ metadata:
     carto.run/supply-chain-name: source-test-scan-to-url
     carto.run/workload-name: dotnet-todos-app
     carto.run/workload-namespace: dotnet-todos
-  name: dotnet-todo-app
+  name: dotnet-todos-app
   namespace: dotnet-todos-test
 spec:
   params:
