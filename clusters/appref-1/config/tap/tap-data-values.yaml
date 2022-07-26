@@ -29,6 +29,10 @@ tap_gui:
     namespace: tap-install
     secretName: tap-tls-secret
   app_config:
+    integrations:
+      github:
+        - host: github.com
+          token: #@ data.values.git_pr.password
     auth:
       allowGuestAccess: true
       environment: development
