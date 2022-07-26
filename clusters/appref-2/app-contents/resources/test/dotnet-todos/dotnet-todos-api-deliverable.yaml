@@ -10,7 +10,7 @@ metadata:
     app.tanzu.vmware.com/deliverable-type: web
     carto.run/supply-chain-name: source-test-scan-to-url
     carto.run/workload-name: dotnet-todos-api
-    carto.run/workload-namespace: dotnet-todos-api
+    carto.run/workload-namespace: dotnet-todos
   name: dotnet-todo-api
   namespace: dotnet-todos-test
 spec:
