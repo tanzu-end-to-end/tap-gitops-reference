@@ -19,6 +19,13 @@ spec:
       value: "gitops-dotnet-todos"
     - name: language
       value: dotnet
+  env:
+    - name: ConnectionStrings__DefaultConnection
+      valueFrom:
+        secretKeyRef:
+          name: api-db-credentials
+          key: connection-string
+
   source:
     git:
       url: https://github.com/jeffellin/dotnet-employee-todo-list-api.git
