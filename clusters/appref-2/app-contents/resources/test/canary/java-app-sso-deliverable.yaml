@@ -11,7 +11,7 @@ metadata:
     carto.run/supply-chain-name: source-test-scan-to-url
     carto.run/workload-name: appsso-starter-java
     carto.run/workload-namespace: canary
-    name: appsso-starter-java
+  name: appsso-starter-java
   namespace: canary-test
 spec:
   params:
