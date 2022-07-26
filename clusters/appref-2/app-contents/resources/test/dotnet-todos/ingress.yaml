@@ -1,0 +1,47 @@
+#@ load("@ytt:data", "data")
+
+---
+apiVersion: projectcontour.io/v1
+kind: HTTPProxy
+metadata:
+  name: dotnet-todos
+  namespace: dotnet-todos
+  annotations:
+    ingress.kubernetes.io/force-ssl-redirect: "true"
+spec:
+  virtualhost:
+    fqdn: #@ "dotnet-todos." + data.values.tap.domains.base
+    tls:
+      secretName: dotnet-todos-cert-tls
+  routes:
+  - conditions:
+    - prefix: /
+    services:
+    - name: dotnet-todos-app
+      port: 80
+    requestHeadersPolicy:
+      set:
+      - name: Host
+        value: dotnet-todos-app.dotnet-todos-test
+  - conditions:
+    - prefix: /api
+    services:
+    - name: dotnet-todos-api
+      port: 80
+    requestHeadersPolicy:
+      set:
+      - name: Host
+        value: dotnet-todos-api.dotnet-todos-test
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: dotnet-todos-cert
+  namespace: dotnet-todos
+spec:
+  secretName: dotnet-todos-cert-tls
+  issuerRef:
+    kind: ClusterIssuer
+    name: letsencrypt-contour-cluster-issuer
+  dnsNames:
+  - #@ "dotnet-todos." + data.values.tap.domains.base
