@@ -28,6 +28,6 @@ spec:
 
   source:
     git:
-      url: https://github.com/jeffellin/dotnet-employee-todo-list-api.git
+      url: https://github.com/tanzu-end-to-end/dotnet-employee-todo-list-api.git
       ref:
         branch: main
