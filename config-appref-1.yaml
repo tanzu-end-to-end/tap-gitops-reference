@@ -8,25 +8,25 @@ paths:
  - clusters/appref-1/config
 tap:
   cert:
-    cn: '*.appref1t.appref.end2end.link'
+    cn: '*.one.appref.end2end.link'
   registry:
     host: harbor.one.appref.end2end.link
   supplychainregistry:
     host: harbor.one.appref.end2end.link
   base:
-    domain: appref1t.appref.end2end.link
+    domain: one.appref.end2end.link
   view:
-    domain: appref1t.appref.end2end.link
+    domain: one.appref.end2end.link
   tapgui:
-    domain: tap-gui.appref1t.appref.end2end.link
+    domain: tap-gui.one.appref.end2end.link
   learningcenter:
-    domain: learningcenter.appref1t.appref.end2end.link
+    domain: learningcenter.one.appref.end2end.link
   cnr:
     domain: appref1.appref.end2end.link
   accelerator:
-    domain: accelerator.appref1t.appref.end2end.link
+    domain: accelerator.one.appref.end2end.link
   metadata:
-    domain: metadata-store.appref1t.appref.end2end.link
+    domain: metadata-store.one.appref.end2end.link
 systems:
   canary:
     gitops_repo_url: https://github.com/jeffellin/gitops-hello
