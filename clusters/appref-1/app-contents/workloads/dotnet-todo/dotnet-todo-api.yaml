@@ -16,7 +16,7 @@ spec:
       value:
         autoscaling.knative.dev/minScale: "1"
     - name: gitops_repository_name
-      value: "gitops-dotnet-todos"
+      value: "trp-gitops-dotnet-todos"
     - name: language
       value: dotnet
   env:

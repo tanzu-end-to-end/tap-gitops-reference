@@ -16,7 +16,7 @@ spec:
       value:
         autoscaling.knative.dev/minScale: "1"
     - name: gitops_repository_name
-      value: "gitops-dotnet-todos"
+      value: "trp-gitops-dotnet-todos"
     - name: clusterBuilder
       value: full
   build:
@@ -29,6 +29,6 @@ spec:
       value: dist
   source:
     git:
-      url: https://github.com/jeffellin/dotnet-employee-todo-list-app.git
+      url: https://github.com/tanzu-end-to-end/trp-dotnet-employee-todo-list-app.git
       ref:
         branch: main

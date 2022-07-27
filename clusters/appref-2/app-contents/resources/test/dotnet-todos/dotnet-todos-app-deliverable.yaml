@@ -21,5 +21,5 @@ spec:
     git:
       ref:
         branch: test
-      url: https://github.com/jeffellin/gitops-dotnet-todos
+      url: https://github.com/tanzu-end-to-end/trp-gitops-dotnet-todos
     subPath: config/dotnet-todos/dotnet-todos-app

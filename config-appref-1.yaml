@@ -29,6 +29,6 @@ tap:
     domain: metadata-store.one.appref.end2end.link
 systems:
   canary:
-    gitops_repo_url: https://github.com/jeffellin/gitops-hello
+    gitops_repo_url: https://github.com/tanzu-end-to-end/trp-gitops-canary
   spring_petclinic:
-    gitops_repo_url: https://github.com/jeffellin/gitops-spring-petclinic
+    gitops_repo_url: https://github.com/tanzu-end-to-end/trp-gitops-spring-petclinic

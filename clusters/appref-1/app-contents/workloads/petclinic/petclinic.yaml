@@ -21,7 +21,7 @@ spec:
       value:
         autoscaling.knative.dev/minScale: "1"
     - name: gitops_repository_name
-      value: "gitops-spring-petclinic"
+      value: "trp-gitops-spring-petclinic"
   source:
     git:
       url: https://github.com/spring-projects/spring-petclinic.git
