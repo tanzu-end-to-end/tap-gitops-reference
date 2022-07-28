@@ -152,6 +152,9 @@ package_overlays:
 - name:  learningcenter
   secrets:
   - name: learningcenterconfig-overlay
+- name: "ootb-templates"
+  secrets:
+    - name: ootb-templates-overlay
 #@ end
 ---
 apiVersion: v1
