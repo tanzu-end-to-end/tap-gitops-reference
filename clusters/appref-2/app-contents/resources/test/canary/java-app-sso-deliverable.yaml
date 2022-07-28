@@ -6,13 +6,13 @@ kind: Deliverable
 metadata:
   labels:
     app.kubernetes.io/component: deliverable
-    app.kubernetes.io/part-of: hello
+    app.kubernetes.io/part-of: appsso-starter-java
     app.tanzu.vmware.com/deliverable-type: web
     carto.run/supply-chain-name: source-test-scan-to-url
-    carto.run/workload-name: hello
+    carto.run/workload-name: appsso-starter-java
     carto.run/workload-namespace: canary
-  name: hello
-  namespace: canary-prod
+  name: appsso-starter-java
+  namespace: canary-test
 spec:
   params:
   - name: gitops_ssh_secret
@@ -20,6 +20,6 @@ spec:
   source:
     git:
       ref:
-        branch: prod
+        branch: test
       url: #@ data.values.systems.canary.gitops_repo_url
-    subPath: config/canary/hello
+    subPath: config/canary/appsso-starter-java

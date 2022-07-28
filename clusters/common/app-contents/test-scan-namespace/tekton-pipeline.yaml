@@ -29,5 +29,14 @@ spec:
               # https://vmware.slack.com/archives/C0186SB6ATY/p1644235576354359
               wget -qO- $(params.source-url) | tar xvz -m
               pwd
-              #sleep infinity
-              ./mvnw test
+              MVNW=mvnw
+              GRADLE="build.gradle"
+              if [ -f "$MVNW" ]; then
+                  ./mvnw test
+              elif [ -f "$GRADLE" ]; then
+                  gradle test --debug
+              else 
+                  echo "ERROR: No supported test framework."
+                  echo "no error right now this is probably a dotnet wl"
+                  #exit 1
+              fi

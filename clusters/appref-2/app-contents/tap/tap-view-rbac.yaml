@@ -3,12 +3,11 @@ kind: Namespace
 metadata:
   name: tap-gui
 ---
-
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   namespace: tap-gui
-  name: tap-gui-viewer
+  name: tap-gui-viewer-tapview
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -17,17 +16,16 @@ metadata:
 subjects:
 - kind: ServiceAccount
   namespace: tap-gui
-  name: tap-gui-viewer
+  name: tap-gui-viewer-tapview
 roleRef:
   kind: ClusterRole
-  name: k8s-reader
+  name: k8s-reader-tapview
   apiGroup: rbac.authorization.k8s.io
 ---
-
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: k8s-reader
+  name: k8s-reader-tapview
 rules:
 - apiGroups: ['']
   resources: ['pods', 'pods/log', 'services', 'configmaps']
@@ -76,9 +74,13 @@ rules:
   resources:
   - imagerepositories
   verbs: ['get', 'watch', 'list']
-- apiGroups: ['conventions.carto.run']
+- apiGroups: ['conventions.apps.tanzu.vmware.com']
   resources:
   - podintents
+  verbs: ['get', 'watch', 'list']
+- apiGroups: ['source.apps.tanzu.vmware.com']
+  resources:
+  - mavenartifacts
   verbs: ['get', 'watch', 'list']
 - apiGroups: ['kpack.io']
   resources:

@@ -1,0 +1,34 @@
+#@ load("@ytt:data", "data")
+
+---
+apiVersion: sso.apps.tanzu.vmware.com/v1alpha1
+kind: ClientRegistration
+metadata:
+  name: appsso-starter-java
+  namespace: canary-test
+spec:
+  authServerSelector:
+    matchLabels:
+      app.kubernetes.io/part-of: default-auth-server
+      app.kubernetes.io/component: authorization-server
+  authorizationGrantTypes:
+    - authorization_code
+  clientAuthenticationMethod: basic
+  requireUserConsent: true
+  redirectURIs:
+    #! Final portion of the url needs to match the serviceClaim name in the workload
+    - #@ "https://appsso-starter-java.canary-test." + data.values.tap.domains.base + "/login/oauth2/code/sso-client"
+  scopes:
+    - name: openid
+---
+apiVersion: services.apps.tanzu.vmware.com/v1alpha1
+kind: ResourceClaim
+metadata:
+  name: appsso-starter-java
+  namespace: canary-test
+spec:
+  ref:
+    apiVersion: sso.apps.tanzu.vmware.com/v1alpha1
+    kind: ClientRegistration
+    name: appsso-starter-java
+    namespace: canary-test

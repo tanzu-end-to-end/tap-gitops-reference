@@ -1,0 +1,99 @@
+#@ load("@ytt:data", "data")
+
+---
+apiVersion: secretgen.k14s.io/v1alpha1
+kind: RSAKey
+metadata:
+ name: default-auth-server-signing-key
+ namespace: service-instances
+spec:
+ secretTemplate:
+   type: Opaque
+   stringData:
+     key.pem: $(privateKey)
+     pub.pem: $(publicKey)
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: my-openid-client-secret
+  namespace: service-instances
+stringData:
+  clientSecret: #@ data.values.tap.sso.client_secret
+---
+apiVersion: sso.apps.tanzu.vmware.com/v1alpha1
+kind: AuthServer
+metadata:
+  name: default-auth-server
+  namespace: service-instances
+  labels:
+    app.kubernetes.io/part-of: default-auth-server
+    app.kubernetes.io/component: authorization-server
+  annotations:
+    sso.apps.tanzu.vmware.com/allow-client-namespaces: "*"
+spec:
+  issuerURI: #@ "https://default-auth." + data.values.tap.domains.base
+  identityProviders:
+    - name: okta-sso
+      openID:
+        issuerURI: #@ data.values.tap.sso.issuer_uri
+        clientID: #@ data.values.tap.sso.client_id
+        clientSecretRef:
+          name: my-openid-client-secret
+        authorizationUri: #@ data.values.tap.sso.issuer_uri + "/v1/authorize"
+        tokenUri: #@ data.values.tap.sso.issuer_uri + "/v1/token"
+        jwksUri: #@ data.values.tap.sso.issuer_uri + "/v1/keys"
+        scopes:
+          - openid
+          - profile
+          - email
+          - groups
+         #!  - animals.adopt
+        claimMappings:
+          roles: groups
+  replicas: 1
+  tokenSignature:
+    signAndVerifyKeyRef:
+      name: default-auth-server-signing-key
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: default-auth-server
+  namespace: service-instances
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-contour-cluster-issuer
+    ingress.kubernetes.io/force-ssl-redirect: "true"
+    kubernetes.io/ingress.class: contour
+    kubernetes.io/tls-acme: "true"
+spec:
+  tls:
+  - secretName: default-auth-server-tls
+    hosts:
+    - #@ "default-auth." + data.values.tap.domains.base
+  rules:
+  - host: #@ "default-auth." + data.values.tap.domains.base
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+           name: default-auth-server
+           port:
+             number: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: default-auth-server
+  namespace: service-instances
+  annotations:
+    kapp.k14s.io/disable-default-label-scoping-rules: ""
+spec:
+  selector:
+    app.kubernetes.io/part-of: default-auth-server
+    app.kubernetes.io/component: authorization-server
+  ports:
+    - port: 80
+      targetPort: 8080

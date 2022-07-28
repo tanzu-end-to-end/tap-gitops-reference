@@ -6,13 +6,13 @@ kind: Deliverable
 metadata:
   labels:
     app.kubernetes.io/component: deliverable
-    app.kubernetes.io/part-of: hello
+    app.kubernetes.io/part-of: dotnet-todos-api
     app.tanzu.vmware.com/deliverable-type: web
     carto.run/supply-chain-name: source-test-scan-to-url
-    carto.run/workload-name: hello
-    carto.run/workload-namespace: canary
-  name: hello
-  namespace: canary-prod
+    carto.run/workload-name: dotnet-todos-api
+    carto.run/workload-namespace: dotnet-todos
+  name: dotnet-todos-api
+  namespace: dotnet-todos-test
 spec:
   params:
   - name: gitops_ssh_secret
@@ -20,6 +20,6 @@ spec:
   source:
     git:
       ref:
-        branch: prod
-      url: #@ data.values.systems.canary.gitops_repo_url
-    subPath: config/canary/hello
+        branch: test
+      url: https://github.com/tanzu-end-to-end/trp-gitops-dotnet-todos
+    subPath: config/dotnet-todos/dotnet-todos-api

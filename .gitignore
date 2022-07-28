@@ -3,4 +3,5 @@ config.yaml
 foo.yaml
 test-ingress.yaml
 .DS_Store
+scripts/kubeconfig.yaml
 params.yaml

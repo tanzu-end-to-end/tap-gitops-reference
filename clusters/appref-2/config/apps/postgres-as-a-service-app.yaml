@@ -9,7 +9,8 @@ metadata:
   annotations:
     kapp.k14s.io/change-group: "postgres-as-a-service-app"
     kapp.k14s.io/change-rule.1: "upsert after upserting cert-manager"
-    kapp.k14s.io/change-rule.2: "upsert after upserting postgres-operator"
+    kapp.k14s.io/change-rule.2: "upsert after upserting tap"
+    kapp.k14s.io/change-rule.3: "upsert after upserting postgres-operator"
 spec:
   serviceAccountName: tap-install-gitops-sa
   syncPeriod: 1m

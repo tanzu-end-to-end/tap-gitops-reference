@@ -5,6 +5,9 @@
 #@ def config():
 profile: full
 ceip_policy_disclosed: true #! Installation fails if this is set to 'false'
+appliveview_connector:
+  backend:
+    host: #@ data.values.tap.appliveview_connector
 cnrs:
   domain_name: #@ data.values.tap.domains.base
   ingress:
@@ -33,6 +36,14 @@ tap_gui:
     namespace: tap-install
     secretName: tap-tls-secret
   app_config:
+    auth:
+      environment: development
+      providers:
+        okta:
+          development:
+            clientId: #@ data.values.auth.clientId
+            clientSecret: #@ data.values.auth.clientSecret
+            audience: #@ data.values.auth.audience
     supplyChain:
       enablePlugin: true
     app:
@@ -85,10 +96,12 @@ excluded_packages:
 - workshops.learningcenter.tanzu.vmware.com
 - cert-manager.tanzu.vmware.com
 - contour.tanzu.vmware.com
-- sso.apps.tanzu.vmware.com
 - ootb-supply-chain-testing-scanning.tanzu.vmware.com
 - ootb-supply-chain-testing.tanzu.vmware.com
 package_overlays:
+- name: ootb-templates
+  secrets:
+  - name: honor-deliverable-subpath-overlay
 - name:  cnrs
   secrets:
   - name: cnrs-network-config-overlay

@@ -4,12 +4,11 @@
 apiVersion: kappctrl.k14s.io/v1alpha1
 kind: App
 metadata:
-  name: workload-config-app
+  name: app-sso-config-app
   namespace: tap-install
   annotations:
-    kapp.k14s.io/change-group: workload-config-app/app
-    kapp.k14s.io/change-rule.1: "delete before deleting tap"
-    kapp.k14s.io/change-rule.2: "upsert after upserting tap"
+    kapp.k14s.io/change-group: app-sso-config-app/app
+    kapp.k14s.io/change-rule: "upsert after upserting tap"
 spec:
   serviceAccountName: tap-install-gitops-sa
   syncPeriod: 1m
@@ -20,7 +19,7 @@ spec:
   template:
   - ytt:
       paths:
-      - clusters/appref-2/app-contents/resources
+      - clusters/common/app-contents/app-sso
       valuesFrom:
       - secretRef:
           name: tap-install-gitops

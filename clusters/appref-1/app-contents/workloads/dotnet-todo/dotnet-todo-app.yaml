@@ -1,0 +1,34 @@
+#@ load("@ytt:data", "data")
+
+---
+apiVersion: carto.run/v1alpha1
+kind: Workload
+metadata:
+  name: dotnet-todos-app
+  labels:
+    apps.tanzu.vmware.com/workload-type: web
+    app.kubernetes.io/part-of: dotnet-todos-app
+    apps.tanzu.vmware.com/has-tests: "true"
+  namespace: dotnet-todos
+spec:
+  params:
+    - name: annotations
+      value:
+        autoscaling.knative.dev/minScale: "1"
+    - name: gitops_repository_name
+      value: "trp-gitops-dotnet-todos"
+    - name: clusterBuilder
+      value: full
+  build:
+    env:
+    - name: BP_NODE_RUN_SCRIPTS
+      value: build
+    - name: BP_WEB_SERVER
+      value: nginx
+    - name: BP_WEB_SERVER_ROOT
+      value: dist
+  source:
+    git:
+      url: https://github.com/tanzu-end-to-end/trp-dotnet-employee-todo-list-app.git
+      ref:
+        branch: main
