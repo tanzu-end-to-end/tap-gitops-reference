@@ -3,19 +3,19 @@ kind: Secret
 metadata:
   name: ootb-templates-overlay
   namespace: tap-install
-  stringData:
-    runtemplate-fix.yaml: |-
-      #@ load("@ytt:overlay", "overlay")
-      #@ def commit_clusterruntemp():
-      kind: ClusterRunTemplate
-      metadata:
-        name: commit-and-pr-pipelinerun
-      #@ end
-      #@overlay/match by=overlay.subset(commit_clusterruntemp())
-      ---
-      spec:
-        template:
-          metadata:
-            generateName: $(runnable.metadata.name)$-pr-
-            #@overlay/match missing_ok=True
-            labels: $(runnable.metadata.labels)$
+stringData:
+  runtemplate-fix.yaml: |-
+    #@ load("@ytt:overlay", "overlay")
+    #@ def commit_clusterruntemp():
+    kind: ClusterRunTemplate
+    metadata:
+      name: commit-and-pr-pipelinerun
+    #@ end
+    #@overlay/match by=overlay.subset(commit_clusterruntemp())
+    ---
+    spec:
+      template:
+        metadata:
+          generateName: $(runnable.metadata.name)$-pr-
+          #@overlay/match missing_ok=True
+          labels: $(runnable.metadata.labels)$
