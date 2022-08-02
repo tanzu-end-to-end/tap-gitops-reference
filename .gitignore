@@ -4,4 +4,6 @@ foo.yaml
 test-ingress.yaml
 .DS_Store
 scripts/kubeconfig.yaml
+creds.tf
 params.yaml
+tfeks/*
