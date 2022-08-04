@@ -24,7 +24,7 @@ module "eks" {
       create_launch_template = false
       launch_template_name   = ""
 
-      disk_size = 50
+      disk_size = 160
 
       min_size     = 2
       max_size     = 5

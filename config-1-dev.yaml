@@ -7,28 +7,11 @@ paths:
  - clusters/common/config
  - clusters/appref-1/config
 tap:
-  cert:
-    cn: '*.1-dev.appref.end2end.link'
   registry:
     host: harbor.one.appref.end2end.link
+    location: jeff/tbs
   supplychainregistry:
     host: harbor.one.appref.end2end.link
+    location: jeff/sc
   base:
-    domain: 1-dev.appref.end2end.link
-  view:
-    domain: 1-dev.appref.end2end.link
-  tapgui:
-    domain: tap-gui.1-dev.appref.end2end.link
-  learningcenter:
-    domain: learningcenter.1-dev.appref.end2end.link
-  cnr:
-    domain: appref1.appref.end2end.link
-  accelerator:
-    domain: accelerator.1-dev.appref.end2end.link
-  metadata:
-    domain: metadata-store.1-dev.appref.end2end.link
-systems:
-  canary:
-    gitops_repo_url: https://github.com/tanzu-end-to-end/trp-gitops-canary
-  spring_petclinic:
-    gitops_repo_url: https://github.com/tanzu-end-to-end/trp-gitops-spring-petclinic
+    domain: 1-devt.appref.end2end.link
