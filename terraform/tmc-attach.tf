@@ -5,7 +5,7 @@ resource "tanzu-mission-control_cluster" "tap_cluster" {
 
   management_cluster_name = "attached"
   provisioner_name        = "attached"
-  name                    = each.key
+  name                    = "${each.key}-eks-${random_string.suffix.result}"
 
 
   spec {

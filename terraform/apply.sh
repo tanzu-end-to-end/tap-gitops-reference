@@ -1,5 +1,5 @@
 #!/bin/bash -ex
-
+terraform init
 terraform validate
 terraform fmt
 terraform apply -auto-approve

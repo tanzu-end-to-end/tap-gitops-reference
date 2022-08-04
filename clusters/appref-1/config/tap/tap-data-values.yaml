@@ -11,9 +11,8 @@ appliveview_connector:
     host: appliveview.one.appref.end2end.link
 buildservice:
   kp_default_repository: #@ "{}/{}".format(data.values.tap.credentials.registry.host, data.values.tap.credentials.registry.repositories.buildService)
-  #! kp_default_repository_aws_iam_role_arn: arn:aws:iam::266463974589:role/ECRReadWrite
-  #! kp_default_repository_username: #@ data.values.tap.credentials.registry.username
-  #! kp_default_repository_password: #@ data.values.tap.credentials.registry.password
+  kp_default_repository_username: #@ data.values.tap.credentials.registry.username
+  kp_default_repository_password: #@ data.values.tap.credentials.registry.password
   tanzunet_username: #@ data.values.tap.credentials.tanzuNet.username
   tanzunet_password: #@ data.values.tap.credentials.tanzuNet.password
   descriptor_name: full

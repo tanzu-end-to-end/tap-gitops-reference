@@ -3,6 +3,11 @@ variable "region" {
   type        = string
   default     = "us-east-2"
 }
+resource "random_string" "suffix" {
+  length  = 8
+  special = false
+  upper   = false //tmc doesn't allow uppers
+}
 
 variable "clusters" {
   description = "Array of cluster information"
