@@ -24,7 +24,7 @@ buildservice:
   tanzunet_password: #@ data.values.tap.credentials.tanzuNet.password
   descriptor_name: lite
   enable_automatic_dependency_updates: true
-supply_chain: testing_scanning
+supply_chain: basic
 shared:
   ingress_domain: #@ data.values.tap.domains.base
 learningcenter:
@@ -93,7 +93,7 @@ grype:
     authSecret:
       name: store-auth-token
       importFromNamespace: metadata-store-secrets
-ootb_supply_chain_testing_scanning:
+ootb_supply_chain_basic:
   registry:
     server: #@ data.values.tap.credentials.supplychainregistry.host
     repository: #@ data.values.tap.credentials.supplychainregistry.repositories.ootbSupplyChain
