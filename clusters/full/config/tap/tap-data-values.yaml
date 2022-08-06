@@ -7,8 +7,15 @@ profile: full
 ceip_policy_disclosed: true #! Installation fails if this is set to 'false'
 appliveview_connector:
   backend:
-    #! host: #@ data.values.tap.appliveview_connector
-    host: appliveview.one.appref.end2end.link
+    host: #@ data.values.tap.appliveview_connector
+cnrs:
+  domain_name: #@ data.values.tap.domains.base
+  ingress:
+    internal:
+      namespace: tanzu-system-ingress
+    external:
+      namespace: tanzu-system-ingress
+    reuse_crds: true
 buildservice:
   kp_default_repository: #@ "{}/{}".format(data.values.tap.credentials.registry.host, data.values.tap.credentials.registry.repositories.buildService)
   kp_default_repository_username: #@ data.values.tap.credentials.registry.username
