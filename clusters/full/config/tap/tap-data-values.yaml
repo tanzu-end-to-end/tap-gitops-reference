@@ -128,9 +128,7 @@ package_overlays:
   - name: learningcenterconfig-overlay
 - name: "ootb-templates"
   secrets:
-    - name: ootb-templates-overlay
-- name: ootb-templates
-  secrets:
+  - name: ootb-templates-overlay
   - name: honor-deliverable-subpath-overlay
 - name:  cnrs
   secrets:
