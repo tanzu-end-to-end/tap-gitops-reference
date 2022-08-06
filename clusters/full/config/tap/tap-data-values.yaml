@@ -129,7 +129,6 @@ package_overlays:
 - name: "ootb-templates"
   secrets:
   - name: ootb-templates-overlay
-  - name: honor-deliverable-subpath-overlay
 - name:  cnrs
   secrets:
   - name: cnrs-network-config-overlay

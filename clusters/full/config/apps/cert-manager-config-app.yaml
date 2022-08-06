@@ -19,7 +19,7 @@ spec:
   template:
   - ytt:
       paths:
-      - clusters/appref-1/app-contents/certs
+      - clusters/full/app-contents/certs
       valuesFrom:
       - secretRef:
           name: tap-install-gitops
