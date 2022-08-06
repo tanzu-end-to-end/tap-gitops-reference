@@ -129,6 +129,13 @@ package_overlays:
 - name: "ootb-templates"
   secrets:
     - name: ootb-templates-overlay
+- name: ootb-templates
+  secrets:
+  - name: honor-deliverable-subpath-overlay
+- name:  cnrs
+  secrets:
+  - name: cnrs-network-config-overlay
+  - name: cnrs-certmanager-config-overlay
 #@ end
 ---
 apiVersion: v1
