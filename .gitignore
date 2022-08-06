@@ -11,3 +11,4 @@ terraform/.terraform/
 *.tfstate*
 .terraform*
 wip/*
+.idea/

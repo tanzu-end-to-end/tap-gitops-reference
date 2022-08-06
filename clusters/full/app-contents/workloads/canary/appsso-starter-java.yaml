@@ -15,6 +15,8 @@ spec:
     - name: annotations
       value:
         autoscaling.knative.dev/minScale: "1"
+    - name: gitops_repository_name
+      value: "trp-gitops-canary"
   source:
     git:
       url: https://github.com/tanzu-end-to-end/trp-appsso-starter-java

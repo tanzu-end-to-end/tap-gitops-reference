@@ -1,21 +1,20 @@
 apiVersion: carto.run/v1alpha1
 kind: Workload
 metadata:
-  name: hello
+  name: hello-bucket
   labels:
-    apps.tanzu.vmware.com/workload-type: web
+    apps.tanzu.vmware.com/workload-type: web-bucket
     app.kubernetes.io/part-of: hello
     apps.tanzu.vmware.com/has-tests: "true"
   namespace: canary
 spec:
   params:
+    - name: gitops_repository_name
+      value: "trp-gitops-canary"
+    - name: endpoint
+      value: jellin-tanzu-hello
+    - name: bucketName
+      value: s3.us-east-2.amazonaws.com
     - name: annotations
       value:
         autoscaling.knative.dev/minScale: "1"
-    - name: gitops_repository_name
-      value: "trp-gitops-canary"
-  source:
-    git:
-      url: https://github.com/tanzu-end-to-end/trp-tanzu-java-web-app.git
-      ref:
-        branch: main
