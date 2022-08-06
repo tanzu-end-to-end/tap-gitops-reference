@@ -1,0 +1,62 @@
+# Please edit the object below. Lines beginning with a '#' will be ignored,
+# and an empty file will abort the edit. If an error occurs while saving this file will be
+# reopened with the relevant failures.
+#
+apiVersion: kpack.io/v1alpha2
+kind: Image
+metadata:
+  creationTimestamp: "2022-08-05T14:09:32Z"
+  generation: 1
+  labels:
+    app.kubernetes.io/component: build
+    app.kubernetes.io/part-of: hello
+    apps.tanzu.vmware.com/has-tests: "true"
+    apps.tanzu.vmware.com/workload-type: web
+    carto.run/cluster-template-name: ""
+    carto.run/resource-name: image-builder
+    carto.run/supply-chain-name: source-test-scan-to-url
+    carto.run/template-kind: ClusterImageTemplate
+    carto.run/workload-name: hello-jar
+    carto.run/workload-namespace: canary
+  name: hello-jar-jeff
+  namespace: canary
+  ownerReferences:
+  - apiVersion: carto.run/v1alpha1
+    blockOwnerDeletion: true
+    controller: true
+    kind: Workload
+    name: hello-jar
+    uid: 4f2e844b-bd8f-4583-9d15-cd6ce6baadf5
+  resourceVersion: "847308"
+  uid: 1532fdbf-0101-4e68-b240-76998d1f21ab
+spec:
+  build:
+    env:
+    - name: BP_OCI_SOURCE
+      value: harbor.one.appref.end2end.link/tap/sc/java-jar:1.0.0@sha256:779d256187b73da4fa452643148bf6e1a5b3f90dd23db94660d8c69a671b0edd
+    resources: {}
+  builder:
+    kind: ClusterBuilder
+    name: default
+  cache:
+    volume:
+      size: 2G
+  failedBuildHistoryLimit: 10
+  imageTaggingStrategy: BuildNumber
+  serviceAccountName: default
+  successBuildHistoryLimit: 10
+  tag: harbor.one.appref.end2end.link/jeff/sc/hello-jar-canary
+status:
+  buildCacheName: hello-jar-cache
+  buildCounter: 1
+  conditions:
+  - lastTransitionTime: "2022-08-05T14:09:40Z"
+    status: "False"
+    type: Ready
+  - lastTransitionTime: "2022-08-05T14:09:40Z"
+    status: "True"
+    type: BuilderReady
+  latestBuildImageGeneration: 1
+  latestBuildReason: CONFIG
+  latestBuildRef: hello-jar-build-1
+  observedGeneration: 1

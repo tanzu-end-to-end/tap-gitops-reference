@@ -1,0 +1,30 @@
+#@ load("@ytt:data", "data")
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dotnet-todos
+---
+apiVersion: kappctrl.k14s.io/v1alpha1
+kind: App
+metadata:
+  name: dev-dotnet-todos
+  namespace: tap-install
+  annotations:
+    kapp.k14s.io/change-rule: "upsert after upserting tap"
+spec:
+  serviceAccountName: tap-install-gitops-sa
+  syncPeriod: 1m
+  fetch:
+  - git:
+      url: #@ data.values.git.url
+      ref: #@ data.values.git.ref
+  template:
+  - ytt:
+      paths:
+      - clusters/common/app-contents/dev-namespace
+      - clusters/common/app-contents/test-scan-namespace
+  deploy:
+  - kapp: 
+      intoNs: dotnet-todos
