@@ -10,3 +10,4 @@ tfeks/*
 terraform/.terraform/
 *.tfstate*
 .terraform*
+wip/*
