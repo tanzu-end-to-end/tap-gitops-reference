@@ -1,0 +1,17 @@
+apiVersion: carto.run/v1alpha1
+kind: Workload
+metadata:
+  name: hello-jar
+  labels:
+    apps.tanzu.vmware.com/workload-type: web
+    app.kubernetes.io/part-of: hello
+    namespace: canary
+spec:
+  params:
+    - name: gitops_repository_name
+      value: "trp-gitops-canary"
+    - name: annotations
+      value:
+        autoscaling.knative.dev/minScale: "1"
+  source:
+    image: harbor.one.appref.end2end.link/tap/sc/jartest-source@sha256:018312ca3a3b44dbf7947e3e080d5a4efca7d60216da583fe598a6f073acc6ea
