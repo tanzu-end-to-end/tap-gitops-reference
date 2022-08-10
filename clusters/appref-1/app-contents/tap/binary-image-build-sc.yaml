@@ -41,7 +41,7 @@ spec:
       value: go-git
     templateRef:
       kind: ClusterSourceTemplate
-      name: source-template
+      name: acme-source-template
   - name: deliverable
     params:
     - name: registry
