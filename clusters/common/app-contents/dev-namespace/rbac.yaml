@@ -65,3 +65,17 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: default
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: default-permit-imagerepo
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: image-admin
+subjects:
+  - kind: ServiceAccount
+    name: default
+---

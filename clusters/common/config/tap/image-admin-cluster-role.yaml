@@ -1,0 +1,8 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: image-admin
+rules:
+- apiGroups: ['source.apps.tanzu.vmware.com;apiextensions.k8s.io']
+  resources: ['imagerepositories']
+  verbs: ['*']
