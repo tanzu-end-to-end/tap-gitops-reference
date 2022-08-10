@@ -14,4 +14,4 @@ spec:
       value:
         autoscaling.knative.dev/minScale: "1"
   source:
-    image: harbor.one.appref.end2end.link/tap/sc/jartest-source@sha256:018312ca3a3b44dbf7947e3e080d5a4efca7d60216da583fe598a6f073acc6ea
+    image: harbor.one.appref.end2end.link/tap/sc/java-jar@sha256:9df8dbbd4c2236683fc8e4c53a690d2fe9d07c6c2c8f5d93710574aa5671e7f7
