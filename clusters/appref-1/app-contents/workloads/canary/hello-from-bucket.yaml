@@ -8,6 +8,8 @@ metadata:
   namespace: canary
 spec:
   params:
+    - name: gitops_repository_name
+      value: "trp-gitops-canary"
     - name: bucketName
       value: jellin-tanzu-hello
     - name: endpoint
