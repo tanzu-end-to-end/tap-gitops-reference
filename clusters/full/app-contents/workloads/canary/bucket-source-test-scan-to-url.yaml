@@ -1,0 +1,166 @@
+# Please edit the object below. Lines beginning with a '#' will be ignored,
+# and an empty file will abort the edit. If an error occurs while saving this file will be
+# reopened with the relevant failures.
+#
+apiVersion: carto.run/v1alpha1
+kind: ClusterSupplyChain
+metadata:
+  name: bucket-source-test-scan-to-url
+spec:
+  params:
+  - name: maven_repository_url
+    value: https://repo.maven.apache.org/maven2
+  - default: test
+    name: gitops_branch
+  - default: supplychain
+    name: gitops_user_name
+  - default: supplychain
+    name: gitops_user_email
+  - default: supplychain@cluster.local
+    name: gitops_commit_message
+  - default: git-https
+    name: gitops_ssh_secret
+  - default: https://github.com
+    name: gitops_server_address
+  - default: tanzu-end-to-end
+    name: gitops_repository_owner
+  - default: github
+    name: gitops_server_kind
+  - default: supply-chain
+    name: gitops_commit_branch
+  - default: Ready for review
+    name: gitops_pull_request_title
+  - default: Pull Request by TAP
+    name: gitops_pull_request_body
+  resources:
+  - name: source-provider
+    params:
+    - name: serviceAccount
+      value: default
+    - name: gitImplementation
+      value: go-git
+    templateRef:
+      kind: ClusterSourceTemplate
+      name: bucket-source-template
+  - name: deliverable
+    params:
+    - name: registry
+      value:
+        ca_cert_data: ""
+        repository: jeff/sc
+        server: harbor.one.appref.end2end.link
+    templateRef:
+      kind: ClusterTemplate
+      name: deliverable-template
+  - name: source-tester
+    sources:
+    - name: source
+      resource: source-provider
+    templateRef:
+      kind: ClusterSourceTemplate
+      name: testing-pipeline
+  - name: source-scanner
+    params:
+    - default: scan-policy
+      name: scanning_source_policy
+    - default: blob-source-scan-template
+      name: scanning_source_template
+    sources:
+    - name: source
+      resource: source-tester
+    templateRef:
+      kind: ClusterSourceTemplate
+      name: source-scanner-template
+  - name: image-builder
+    params:
+    - name: serviceAccount
+      value: default
+    - name: registry
+      value:
+        ca_cert_data: ""
+        repository: jeff/sc
+        server: harbor.one.appref.end2end.link
+    - default: default
+      name: clusterBuilder
+    - default: ./Dockerfile
+      name: dockerfile
+    - default: ./
+      name: docker_build_context
+    - default: []
+      name: docker_build_extra_args
+    sources:
+    - name: source
+      resource: source-scanner
+    templateRef:
+      kind: ClusterImageTemplate
+      options:
+      - name: kpack-template
+        selector:
+          matchFields:
+          - key: spec.params[?(@.name=="dockerfile")]
+            operator: DoesNotExist
+      - name: kaniko-template
+        selector:
+          matchFields:
+          - key: spec.params[?(@.name=="dockerfile")]
+            operator: Exists
+  - images:
+    - name: image
+      resource: image-builder
+    name: image-scanner
+    params:
+    - default: scan-policy
+      name: scanning_image_policy
+    - default: private-image-scan-template
+      name: scanning_image_template
+    templateRef:
+      kind: ClusterImageTemplate
+      name: image-scanner-template
+  - images:
+    - name: image
+      resource: image-scanner
+    name: config-provider
+    params:
+    - name: serviceAccount
+      value: default
+    templateRef:
+      kind: ClusterConfigTemplate
+      name: convention-template
+  - configs:
+    - name: config
+      resource: config-provider
+    name: app-config
+    templateRef:
+      kind: ClusterConfigTemplate
+      name: config-template
+  - configs:
+    - name: config
+      resource: app-config
+    name: config-writer
+    params:
+    - name: serviceAccount
+      value: default
+    - name: registry
+      value:
+        ca_cert_data: ""
+        repository: jeff/sc
+        server: harbor.one.appref.end2end.link
+    templateRef:
+      kind: ClusterTemplate
+      name: config-writer-and-pull-requester-template
+  selector:
+    apps.tanzu.vmware.com/has-tests: "true"
+    apps.tanzu.vmware.com/workload-type: web-bucket
+status:
+  conditions:
+  - lastTransitionTime: "2022-08-04T18:46:13Z"
+    message: ""
+    reason: Ready
+    status: "True"
+    type: TemplatesReady
+  - lastTransitionTime: "2022-08-04T18:46:13Z"
+    message: ""
+    reason: Ready
+    status: "True"
+    type: Ready
+  observedGeneration: 1

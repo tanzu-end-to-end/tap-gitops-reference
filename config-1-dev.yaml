@@ -5,7 +5,7 @@ git:
   ref: origin/dev
 paths:
  - clusters/common/config
- - clusters/appref-1/config
+ - clusters/full/config
 tap:
   registry:
     host: harbor.one.appref.end2end.link

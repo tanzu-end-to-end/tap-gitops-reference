@@ -1,0 +1,30 @@
+#@ load("@ytt:data", "data")
+
+---
+apiVersion: carto.run/v1alpha1
+kind: Workload
+metadata:
+  name: appsso-starter-java
+  labels:
+    apps.tanzu.vmware.com/workload-type: web
+    app.kubernetes.io/part-of: appsso-starter-java
+    apps.tanzu.vmware.com/has-tests: "true"
+  namespace: canary
+spec:
+  params:
+    - name: annotations
+      value:
+        autoscaling.knative.dev/minScale: "1"
+    - name: gitops_repository_name
+      value: "trp-gitops-canary"
+  source:
+    git:
+      url: https://github.com/tanzu-end-to-end/trp-appsso-starter-java
+      ref:
+        branch: main
+  serviceClaims:
+  - name: sso-client
+    ref:
+      apiVersion: services.apps.tanzu.vmware.com/v1alpha1
+      kind: ResourceClaim
+      name: appsso-starter-java
