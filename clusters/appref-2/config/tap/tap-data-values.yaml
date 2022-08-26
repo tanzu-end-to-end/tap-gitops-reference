@@ -15,7 +15,6 @@ cnrs:
       namespace: tanzu-system-ingress
     external:
       namespace: tanzu-system-ingress
-    reuse_crds: true
 buildservice:
   kp_default_repository: #@ "{}/{}".format(data.values.tap.credentials.registry.host, data.values.tap.credentials.registry.repositories.buildService)
   kp_default_repository_username: #@ data.values.tap.credentials.registry.username
@@ -31,7 +30,6 @@ learningcenter:
   ingressSecret: 
     secretName:  learningcenter-cert-tls
 tap_gui:
-  service_type: ClusterIP
   tls:
     namespace: tap-install
     secretName: tap-tls-secret
