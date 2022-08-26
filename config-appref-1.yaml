@@ -2,7 +2,7 @@
 catalog: https://github.com/tanzu-end-to-end/acme-catalog/blob/main/catalog-info.yaml
 git:
   url: https://github.com/tanzu-end-to-end/tap-gitops-reference
-  ref: origin/main
+  ref: origin/bugbash
 paths:
  - clusters/common/config
  - clusters/appref-1/config
@@ -14,4 +14,4 @@ tap:
     host: harbor.one.appref.end2end.link
     location: tap/sc
   base:
-    domain: one.appref.end2end.link
+    domain: bb1.appref.end2end.link

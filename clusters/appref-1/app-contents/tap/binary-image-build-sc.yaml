@@ -47,7 +47,7 @@ spec:
     - name: registry
       value:
         ca_cert_data: ""
-        repository: tap/sc
+        repository: jeff/sc
         server: harbor.one.appref.end2end.link
     templateRef:
       kind: ClusterTemplate
@@ -59,7 +59,7 @@ spec:
     - name: registry
       value:
         ca_cert_data: ""
-        repository: tap/sc
+        repository: jeff/sc
         server: harbor.one.appref.end2end.link
     - default: default
       name: clusterBuilder
