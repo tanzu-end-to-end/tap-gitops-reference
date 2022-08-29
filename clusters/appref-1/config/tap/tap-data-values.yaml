@@ -78,7 +78,7 @@ tap_gui:
           serviceAccountToken: #@ data.values.tap.tap_gui.iterate.sa_token
           #! skipMetricsLookup per https://vmware.slack.com/archives/C02D60T1ZDJ/p1661527343469509
           skipTLSVerify: false
-          skipMetricsLookup: true
+          skipMetricsLookup: false
           caData: #@ data.values.tap.tap_gui.iterate.api_server_ca
         - url:  #@ data.values.tap.tap_gui.view.api_server_url
           name: tap-build
@@ -86,7 +86,7 @@ tap_gui:
           serviceAccountToken: #@ data.values.tap.tap_gui.view.sa_token
           skipTLSVerify: false
           #! skipMetricsLookup per https://vmware.slack.com/archives/C02D60T1ZDJ/p1661527343469509
-          skipMetricsLookup: true
+          skipMetricsLookup: false
           caData: #@ data.values.tap.tap_gui.view.api_server_ca
     catalog:
         locations:
