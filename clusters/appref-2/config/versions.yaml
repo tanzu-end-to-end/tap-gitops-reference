@@ -3,7 +3,7 @@
 #@overlay/match-child-defaults missing_ok=True
 ---
 tap:
-  version: "1.3.0-build.14"
+  version: "1.3.0-build.15"
   namespace: tap-install
 postgres_operator:
   version: "1.7.3"
