@@ -2,11 +2,15 @@ apiVersion: eksctl.io/v1alpha5
 kind: ClusterConfig
 
 metadata:
-  name: tap-bug-bash-build
+  name: tap-bug-bash-view
   region: us-east-1
+
+
 nodeGroups:
   - name: ng-1
     instanceType: m5.xlarge
     desiredCapacity: 4
     amiFamily: AmazonLinux2
     containerRuntime: containerd
+    availabilityZones: ['us-east-1a']
+availabilityZones: ['us-east-1a', 'us-east-1b']

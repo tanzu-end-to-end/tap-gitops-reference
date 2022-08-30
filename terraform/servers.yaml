@@ -1,0 +1,3 @@
+servers:
+  - name: tap-bug-bash-build
+  - name: tap-bug-bash-view

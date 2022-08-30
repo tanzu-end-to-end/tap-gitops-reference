@@ -22,7 +22,7 @@ yq e -i '.clusters.build.metadatastore.ingress_ca = env(CA)' $PARAMS_YAML
 export CA=$(kubectl get secret -n metadata-store app-tls-cert -o json | jq -r ".data.\"ca.crt\"")
 yq e -i '.clusters.view.metadatastore.app_ca = env(CA)' $PARAMS_YAML
 
-export AUTH_TOKEN=`kubectl get secrets -n metadata-store -o jsonpath="{.items[?(@.metadata.annotations['kubernetes\.io/service-account\.name']=='metadata-store-read-write-client')].data.token}" | base64 -d`
+export AUTH_TOKEN=`kubectl get secret metadata-store-read-write-client -n metadata-store -ojsonpath="{.data.token}" | base64 -d`
 yq e -i '.clusters.build.metadatastore.auth_token = env(AUTH_TOKEN)' $PARAMS_YAML
 yq e -i '.clusters.view.metadatastore.auth_token = env(AUTH_TOKEN)' $PARAMS_YAML
 
