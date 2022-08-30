@@ -16,7 +16,7 @@ buildservice:
   tanzunet_username: #@ data.values.tap.credentials.tanzuNet.username
   tanzunet_password: #@ data.values.tap.credentials.tanzuNet.password
   descriptor_name: full
-  enable_automatic_dependency_updates: true
+  enable_automatic_dependency_updates: false
 supply_chain: testing_scanning
 shared:
   ingress_domain: #@ data.values.tap.domains.base
