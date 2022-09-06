@@ -1,3 +1,7 @@
 servers:
   - name: tap-bug-bash-build
+    config: eks-build.yaml
+    region: us-east-1
   - name: tap-bug-bash-view
+    config: eks-view.yaml
+    region: us-east-1
