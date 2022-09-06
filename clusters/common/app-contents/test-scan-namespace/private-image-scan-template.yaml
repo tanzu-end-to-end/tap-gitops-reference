@@ -67,7 +67,7 @@ spec:
           - bash
         env:
           - name: METADATA_STORE_URL
-            value: metadata-store.bb1.appref.end2end.link
+            value: https://metadata-store-app.metadata-store.svc.cluster.local:8443
           - name: METADATA_STORE_ACCESS_TOKEN
             valueFrom:
               secretKeyRef:
