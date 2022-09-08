@@ -1,5 +1,5 @@
 #!/bin/bash -ex
-for im in $(yq e -I=0 -o=j '.servers[]' servers.yaml); do
+for im in $(yq e -I=0 -o=j '.clusters[]' servers.yaml); do
       cluster=$(echo $im | jq -r '.name' -)
       config=$(echo $im | jq -r '.config' -)    
       region=$(echo $im | jq -r '.region' -)
