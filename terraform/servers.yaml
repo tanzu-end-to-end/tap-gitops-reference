@@ -2,10 +2,10 @@ clusters:
   build:
     name: tap-bug-bash-build
     config: eks-build.yaml
-    region: us-east-1
-    context: arn:aws:eks:us-east-1:266463974589:cluster/tap-bug-bash-build
+    region: us-east-2
+    context: arn:aws:eks:us-east-2:266463974589:cluster/tap-bug-bash-build
   view:
     name: tap-bug-bash-view
     config: eks-view.yaml
-    region: us-east-1
-    context: arn:aws:eks:us-east-1:266463974589:cluster/tap-bug-bash-view
+    region: us-east-2
+    context: arn:aws:eks:us-east-2:266463974589:cluster/tap-bug-bash-view
