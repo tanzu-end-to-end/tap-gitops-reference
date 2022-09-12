@@ -14,4 +14,4 @@ tap:
     host: harbor.one.appref.end2end.link
     location: tap/sc
   base:
-    domain: bb2.appref.end2end.link
+    domain: bb4.appref.end2end.link
