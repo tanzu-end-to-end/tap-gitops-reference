@@ -1,8 +1,11 @@
-#!/bin/bash -x
+#!/bin/bash -e
+START="$(date +%s)"
 
 : ${PARAMS_YAML?"Need to set PARAMS_YAML environment variable"}
 
-
+convertsecs() {
+  printf 'RUNTIME %dh:%dm:%ds\n' $(($1/3600)) $(($1%3600/60)) $(($1%60))
+}
 
 getTapUICreds(){
 
@@ -52,3 +55,6 @@ getTapUICreds $build_cluster appref_2
 getMetaStoreCreds $view_cluster
 applyCluster
 
+DURATION=$[ $(date +%s) - ${START} ]
+
+convertsecs ${DURATION}

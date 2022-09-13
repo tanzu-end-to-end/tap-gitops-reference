@@ -1,4 +1,4 @@
-#!/bin/bash -ex
+#!/bin/bash -e
 START="$(date +%s)"
 
 # Retrieve the list of output commands from terraform output.  This is map of cluster name as keys with command as value
