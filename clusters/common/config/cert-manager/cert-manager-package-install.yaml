@@ -2,27 +2,15 @@
 #@ load("@ytt:yaml", "yaml")
 #@ def othersecret():
 ---
-apiVersion: v1
-kind: Secret
-type: Opaque
+apiVersion: secretgen.carvel.dev/v1alpha1
+kind: SecretImport
 metadata:
-  name: cert-manager-vault-token
+  name: route53-credentials
   namespace: cert-manager
-data:
-  token: #@ base64.encode(data.values.vault.token)
----
-apiVersion: cert-manager.io/v1
-kind: ClusterIssuer
-metadata:
-  name: vault-cluster-issuer
+  annotations:
+    kapp.k14s.io/change-rule: "delete after deleting tap"
 spec:
-  vault:
-    path: #@ "pki_int/sign/" + data.values.vault.role
-    server: #@ "http://vault." + data.values.h2o.dns_subdomain + ":8200"
-    auth:
-      tokenSecretRef:
-        name: cert-manager-vault-token
-        key: token
+  fromNamespace: tap-install
 #@ end
 ---
 apiVersion: packaging.carvel.dev/v1alpha1
@@ -48,3 +36,4 @@ metadata:
   name: certmanager-security-overlay
 stringData:
   othersecret.yaml: #@ yaml.encode(othersecret())
+  
