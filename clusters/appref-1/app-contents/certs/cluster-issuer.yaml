@@ -12,3 +12,12 @@ spec:
       tokenSecretRef:
         name: cert-manager-vault-token
         key: token
+---
+apiVersion: v1
+kind: Secret
+type: Opaque
+metadata:
+  name: cert-manager-vault-token
+  namespace: cert-manager
+data:
+  token: #@ base64.encode(data.values.vault.token)
