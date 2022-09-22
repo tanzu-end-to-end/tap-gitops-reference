@@ -25,6 +25,7 @@ buildservice:
   enable_automatic_dependency_updates: true
 supply_chain: basic
 shared:
+  ca_cert_data: #@ data.values.tap.credentials.registry.ca_cert_data
   ingress_domain: #@ data.values.tap.domains.base
 learningcenter:
   ingressSecret: 
