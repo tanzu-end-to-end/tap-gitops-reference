@@ -1,3 +1,6 @@
+#@ load("@ytt:data", "data")
+#@ load("@ytt:base64", "base64")
+---
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
@@ -17,5 +20,5 @@ type: Opaque
 metadata:
   name: cert-manager-vault-token
   namespace: cert-manager
-stringData:
+data:
   token: #@ base64.encode(data.values.vault.token)
