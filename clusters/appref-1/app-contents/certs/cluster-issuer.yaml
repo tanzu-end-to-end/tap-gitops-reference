@@ -8,7 +8,7 @@ metadata:
 spec:
   vault:
     path: #@ "pki_int/sign/" + data.values.vault.role
-    server: #@ "http:/" + data.values.vault.host + ":8200"
+    server: #@ "http://" + data.values.vault.host + ":8200"
     auth:
       tokenSecretRef:
         name: cert-manager-vault-token
