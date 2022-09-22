@@ -40,9 +40,9 @@ tap_gui:
       providers:
         okta:
           development:
-            clientId: #@ data.values.auth.clientId
-            clientSecret: #@ data.values.auth.clientSecret
-            audience: #@ data.values.auth.audience
+            clientId: #@ data.values.appsso.clientId
+            clientSecret: #@ data.values.appsso.clientSecret
+            audience: #@ data.values.appsso.audience
     techdocs:
       builder: 'external'
       publisher:
