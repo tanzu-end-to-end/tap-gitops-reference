@@ -1,7 +1,11 @@
-auth:
-  clientId: okta-client-id
-  clientSecret: okta-client-secret
-  audience: https://dev-32828523.okta.com/
+vault:
+  host: <REDACTED>
+  token: <REDACTED> #! Will be instructed to populate this when following the readme
+  role: <REDACTED> #! Use H2O subdomain name as shown
+appsso:
+  clientId: <REDACTED>
+  clientSecret: <REDACTED>
+  audience: <REDACTED>
 clusters:
   view:
     tap_gui:
@@ -34,12 +38,19 @@ tap:
     username: --REDACTED--
     password: --REDACTED--
   registry:
+    ca_cert_data: |-
+      -----BEGIN CERTIFICATE-----
+      -----END CERTIFICATE-----
     username: --REDACTED--
     password: --REDACTED--
   supplychainregistry:
     username: --REDACTED--
     password: --REDACTED--
 common:
+  sso:
+    issuer_uri: --REDACTED--
+    client_id: --REDACTED--
+    client_secret: --REDACTED--
   repos:
     ssl:
       host: https://github.com
@@ -52,6 +63,7 @@ common:
         --REDACTED--
         -----END RSA PRIVATE KEY-----
       publickey: |
+        ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDML5Lues8OvyX5mR8tFnsbNixYbCW9wRzxH2lzHKrvdLNuJuZ2gyxPho6iAuqpTsZpFmfvOlV9HOE6bS6crCY7x/fwWoaO2tG7AHbCzK+ljikrOb/YDV1ITCsuLJEzUZeMq/IrKWKnjP09OXB6gnIZ9CQkjWt8IiAfiryk0FFRlHtdAKHeCCM1jSvzGX58krGajKqSk5LnGolXGnMpcs60fWh4PjUGcgKFWu5us6GGH+cyngzqc0HYjKsNepH0vhUetX+RgGmKeMas+n1xdWI1IUo1dkCiA453pP8K3YFR/yCYKIKSjs9H9Io/+q6OzwSERE1Qctry5hTkzQWFT/GZ
       knownhosts: |
         github.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl
         github.com ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ==
