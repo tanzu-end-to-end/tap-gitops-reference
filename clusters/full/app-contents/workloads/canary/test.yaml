@@ -33,7 +33,7 @@ spec:
   build:
     env:
     - name: BP_OCI_SOURCE
-      value: harbor.one.appref.end2end.link/tap/sc/java-jar:1.0.0@sha256:779d256187b73da4fa452643148bf6e1a5b3f90dd23db94660d8c69a671b0edd
+      value: harbor.h2o-4-1396.h2o.vmware.com/tap/sc/java-jar:1.0.0@sha256:779d256187b73da4fa452643148bf6e1a5b3f90dd23db94660d8c69a671b0edd
     resources: {}
   builder:
     kind: ClusterBuilder
@@ -45,7 +45,7 @@ spec:
   imageTaggingStrategy: BuildNumber
   serviceAccountName: default
   successBuildHistoryLimit: 10
-  tag: harbor.one.appref.end2end.link/jeff/sc/hello-jar-canary
+  tag: harbor.h2o-4-1396.h2o.vmware.com/jeff/sc/hello-jar-canary
 status:
   buildCacheName: hello-jar-cache
   buildCounter: 1
