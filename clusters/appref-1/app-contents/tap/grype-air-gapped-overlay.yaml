@@ -1,0 +1,29 @@
+# This is a variation of the Grype airgap doc here:
+# https://docs.vmware.com/en/VMware-Tanzu-Application-Platform/1.2/tap/GUID-scst-scan-offline-airgap.html
+# Removed all changes related to Grype invulnerability DB, as I'm only supplying the certificate for Harbor purposes
+apiVersion: v1
+kind: Secret
+metadata:
+  name: grype-airgap-overlay
+  namespace: tap-install #! namespace where tap is installed
+stringData:
+  patch.yaml: |
+    #@ load("@ytt:overlay", "overlay")
+    #@overlay/match by=overlay.subset({"kind":"ScanTemplate"}),expects="1+"
+    ---
+    spec:
+      template:
+        initContainers:
+          #@overlay/match by=overlay.subset({"name": "scan-plugin"}), expects="1+"
+          - name: scan-plugin
+            #@overlay/match missing_ok=True
+            volumeMounts:
+              #@overlay/append
+              - name: ca-cert
+                mountPath: /etc/ssl/certs/custom-ca.crt
+                subPath: ca.crt #! key pointing to ca certificate
+        volumes:
+        #@overlay/append
+        - name: ca-cert
+          configMap:
+            name: grype-ca #! name of the configmap created
