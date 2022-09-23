@@ -24,6 +24,9 @@ spec:
   - ytt:
       paths:
       - clusters/common/app-contents/dev-namespace
+      valuesFrom:
+        - secretRef:
+            name: tap-install-gitops
   deploy:
   - kapp: 
       intoNs: spring-sensors
