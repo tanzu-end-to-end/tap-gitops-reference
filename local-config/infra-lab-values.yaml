@@ -1,0 +1,201 @@
+#@data/values
+---
+h2o:
+  tenant: h2o-4-1396 #! Supplied by H2O
+  dns_subdomain: h2o-4-1396.h2o.vmware.com #! Suggest H2O_SUB_DOMAIN
+avi:
+  admin_username: admin #! Supplied by H2O
+  admin_password: "GFYsubUF0Ety43dBwV-" #! Supplied by H2O
+  controller_host: avi01.h2o-4-1396.h2o.vmware.com #! Supplied by H2O
+  dns_subdomain: h2o-4-1396.h2o.vmware.com #! Suggest H2O_SUB_DOMAIN
+vsphere:
+  vcenter: vc01.h2o-4-1396.h2o.vmware.com #! Supplied by H2O
+  admin_username: administrator@vsphere.local #! Supplied by H2O
+  admin_password: "GFYsubUF0Ety43dBwV-" #! Supplied by H2O
+  standard_user_password: "GFYsubUF0Ety43dBwV-" #! You can pick this one.
+  supervisor:
+    host: vc01cl01-wcp.h2o-4-1396.h2o.vmware.com #! This should be from vCenter Menu->Workload Management->Supervisor Clusters
+    guest_cluster_version: "v1.22.9+vmware.1-tkg.1.cc71bc8"
+vm_service:
+  vm:
+    public_key: "ssh-rsa AAAAREDACTED" #! Optional.  If you set, you should have the matching private key in order to access VM's created by the VM service
+    admin_user: admin #! Optional.  If you set, you can use this user along with the user id and password, to ssh into VM service VMs
+    admin_password: "GFYsubUF0Ety43dBwV-" #! Optional.  If you set, you can use this password along with the user id, vmware to ssh into VM service VMs   
+    image_name: centos-stream-8-vmservice-v1alpha1-1638306496810 #! Ensure this matches the image name in your content repository
+    class_name: best-effort-medium #! This is the vm class you want to use
+    storage_class: vc01cl01-t0compute #! Ensure this matches the storage class name in your environment
+    network_type: vsphere-distributed #! Valid values are vsphere-distributed or nsx-t
+    network_name: user-workload #! For VDS, this must be the TKGS network name associated with the vNamespace.  For NSX-T this can be optional.  It was tested for NSX-T with blank value
+tmc:
+  context: east-se #! Update to the name of your preconfigured TMC CLI context
+  management_cluster_name: h2o-4-1396-sup #! Update to the name of your mangaement cluster in TMC
+  cluster_group: h2o-4-1396
+vault:
+  host: vault.h2o-4-1396.h2o.vmware.com #! update based upon the subdomain provided by H2O
+  vault_hcl: |
+    # Full configuration options can be found at https://www.vaultproject.io/docs/configuration
+    ui = true
+    cluster_name = "vault-cluster"
+    log_level = "info"
+
+    storage "file" {
+      path = "/opt/vault/data"
+    }
+
+    # HTTP listener
+    listener "tcp" {
+    address = "0.0.0.0:8200"
+    tls_disable = 1
+    }
+
+    # HTTPS listener
+    # listener "tcp" {
+    #   address       = "0.0.0.0:8200"
+    #   tls_cert_file = "/opt/vault/tls/tls.crt"
+    #   tls_key_file  = "/opt/vault/tls/tls.key"
+    #   tls_disable = 1
+    # }
+harbor:
+  host: harbor.h2o-4-1396.h2o.vmware.com #! Suggest "harbor." + H2O_SUB_DOMAIN
+  username: admin
+  password: "GFYsubUF0Ety43dBwV-"
+  #! The hostname and harbor_admin_password should be modified below based upon the values above
+  config_yaml: |
+    #! Customized Portions...
+    hostname: harbor.h2o-4-1396.h2o.vmware.com
+    harbor_admin_password: "GFYsubUF0Ety43dBwV-"
+    #! Boilerplate
+    http:
+      port: 80
+    https:
+      port: 443
+      certificate: /harbor/harbor.cert
+      private_key: /harbor/harbor_key.key
+    database:
+      password: REDACTED
+      max_idle_conns: 50
+      max_open_conns: 1000
+    data_volume: /data
+    trivy:
+      ignore_unfixed: false
+      skip_update: false
+      insecure: false
+    jobservice:
+      max_job_workers: 10
+    notification:
+      webhook_job_max_retry: 10
+    chart:
+      absolute_url: disabled
+    log:
+      level: info
+      local:
+        rotate_count: 50
+        rotate_size: 200M
+        location: /var/log/harbor
+    _version: 2.2.0
+    proxy:
+      http_proxy:
+      https_proxy:
+      no_proxy:
+      components:
+        - core
+        - jobservice
+        - trivy
+  #! Must update this with valid certs
+  tls:
+    certificate: |
+      -----BEGIN CERTIFICATE-----
+      MIIEGzCCAwOgAwIBAgIUMXmx5YCBuSji72wREeC2rOVnaRgwDQYJKoZIhvcNAQEL
+      BQAwJDEiMCAGA1UEAxMZaDJvLTQtMTM5Ni5oMm8udm13YXJlLmNvbTAeFw0yMjA5
+      MjExNTMzMTBaFw0yMjEwMjExNTMzNDBaMCsxKTAnBgNVBAMTIGhhcmJvci5oMm8t
+      NC0xMzk2Lmgyby52bXdhcmUuY29tMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIB
+      CgKCAQEA5zqXRyipRaI+tndKzZu1hPeDCV9egMv6UCpXPhv/pVmfIsmIw3pE5b1g
+      YSPGjf9V/Zw5lLJ414Nsj2b990ahNDtmtwPmcoRFPy5/E9iI0fjuQETodzJJgisA
+      279+Ny31ZwKtYFUgOJ9kg2s/Rbx39qfJcvR/soN1gH91QlSfSFTq+PpByEgt+N7v
+      akgiPxRgfZTYcZytq0LqcxuG5vpgCy4V2M2MNjJ04zym9Mrevrq2olI0y8gshlD8
+      JsYdKAj0Z00raPKNf3F7nbm55z6w9JoA48WvFpFdsnKS7s7WHMNucr6PmYoE9Skj
+      bvo73rMNLuB3gIDxZWvCELSBIVC0XwIDAQABo4IBPDCCATgwDgYDVR0PAQH/BAQD
+      AgOoMB0GA1UdJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjAdBgNVHQ4EFgQUrHBa
+      VG6ndMHAR6u/Dda2hTUMCC8wHwYDVR0jBBgwFoAUjNgx14/WN2bvH1Sf4T5wDNZy
+      Si4wUQYIKwYBBQUHAQEERTBDMEEGCCsGAQUFBzAChjVodHRwOi8vdmF1bHQuaDJv
+      LTQtMTM5Ni5oMm8udm13YXJlLmNvbTo4MjAwL3YxL3BraS9jYTArBgNVHREEJDAi
+      giBoYXJib3IuaDJvLTQtMTM5Ni5oMm8udm13YXJlLmNvbTBHBgNVHR8EQDA+MDyg
+      OqA4hjZodHRwOi8vdmF1bHQuaDJvLTQtMTM5Ni5oMm8udm13YXJlLmNvbTo4MjAw
+      L3YxL3BraS9jcmwwDQYJKoZIhvcNAQELBQADggEBAG7lKKjZJznRf9Cesb4aaH/Q
+      Cjd8dRlLsGF069ofue5sFSkyMjTOnMGBO5Mkoby/LVJ7ZYzrh587c0erkD/9GmUW
+      hFwzIB7IuZEpx3vOzJffFnomnCPnfKyX5u9EV9EvvPgTPNYvVGNvoiEd/WGkAmM9
+      u2VXXXkW3hWKuvieUgEgsehdscj38+jOB3RW7VR7+vtbndx1eqItkHes1f9NMAZM
+      FaJHHJKjixrUgDSDK2wU1RjPhXvbTbLtbdTvu8bRK0rpVU0C3gLWcuANDAYjM1nH
+      L8tm7w10yDE/bN24VbB/T9ACmw+cNoEIcq+dnyP0dpMDDJyKR+JEV1UIhwB0jpA=
+      -----END CERTIFICATE-----
+      -----BEGIN CERTIFICATE-----
+      MIIDYTCCAkmgAwIBAgIUPJpz/wf87WiEeOUuLya9e38DOZ4wDQYJKoZIhvcNAQEL
+      BQAwJDEiMCAGA1UEAxMZaDJvLTQtMTM5Ni5oMm8udm13YXJlLmNvbTAeFw0yMjA5
+      MjExNTMyNDNaFw0zMjA5MTgxNTMzMTNaMCQxIjAgBgNVBAMTGWgyby00LTEzOTYu
+      aDJvLnZtd2FyZS5jb20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCs
+      edL2yqiP0CAy9vAvKUlE9pxraQGUgRteqt/JinKltN3+bwQmTJ1+2eShalEa/JE2
+      JYE8nH2ESQ9xQ5gf5jmmGMMJQ42gSxi5U/DCqpPHemngWplSXv66z6xAjq4WUsNo
+      myreikUDWor3xtKKvm9rz83dtlLy1Uo3lGqRMxEXftBjuB4zsczCoBVY3jPzlTL8
+      Mn5RsLuqXAFCd5l28H8GtX5A16uTZxAXF8OJXCdyFQLwc1tjNkC2zKld8QPBhdpy
+      S/C9bfgY4z3rfwwnW97QWy/7WDuFb3tKPqk0pqwjjqiegWA97fbVndiUommZn4mr
+      t2ASoR/L8XfV+tDHlC1JAgMBAAGjgYowgYcwDgYDVR0PAQH/BAQDAgEGMA8GA1Ud
+      EwEB/wQFMAMBAf8wHQYDVR0OBBYEFIzYMdeP1jdm7x9Un+E+cAzWckouMB8GA1Ud
+      IwQYMBaAFIzYMdeP1jdm7x9Un+E+cAzWckouMCQGA1UdEQQdMBuCGWgyby00LTEz
+      OTYuaDJvLnZtd2FyZS5jb20wDQYJKoZIhvcNAQELBQADggEBAIVaOxTVpuClVpLD
+      STUyU2yP4OMTR6BOP8q2LvbPGyaWFKbOY7Ti7FN8K7JJAZkRynj1orV+tQX+51V0
+      ZWCCP/JGTtJ75YNitDKru53ZYvC7Kbd9QF0JL00yyMtH2rCDuvNI5Q6l2zTLVh/N
+      Urw449PhI9O0MNFEow+4DIDst/aNhS09u0avcGkt33B8gc8CCZGMI/jSsslFk9kb
+      O710R18SezvmLuGBVDJXJ+ck3HceYXZeuHg4yI2hZklA0zamUpWiS1FuUIAQ8ug9
+      DWgVomc4NY4YlWw4F/BKLABsUsxStVrc8hdfjWn/TUH9D5MqNx+23re2tPQrnUXu
+      q96+FEA=
+      -----END CERTIFICATE-----
+    private_key: |
+      -----BEGIN RSA PRIVATE KEY-----
+      MIIEowIBAAKCAQEA5zqXRyipRaI+tndKzZu1hPeDCV9egMv6UCpXPhv/pVmfIsmI
+      w3pE5b1gYSPGjf9V/Zw5lLJ414Nsj2b990ahNDtmtwPmcoRFPy5/E9iI0fjuQETo
+      dzJJgisA279+Ny31ZwKtYFUgOJ9kg2s/Rbx39qfJcvR/soN1gH91QlSfSFTq+PpB
+      yEgt+N7vakgiPxRgfZTYcZytq0LqcxuG5vpgCy4V2M2MNjJ04zym9Mrevrq2olI0
+      y8gshlD8JsYdKAj0Z00raPKNf3F7nbm55z6w9JoA48WvFpFdsnKS7s7WHMNucr6P
+      mYoE9Skjbvo73rMNLuB3gIDxZWvCELSBIVC0XwIDAQABAoIBAALEIKspQV0j47wr
+      ESoEgtdkXpzuFyNTTVtIJmMH0rcXq1+vKYOtIsXczhpbYzSvqUevZsDwoaFyYQoW
+      IVOj9Km7TC9ETK1yB6IJ3FtQa9KXN8JtEJrcbySvfwMh91CRrC3fSlOssQX8Yidw
+      UQF0j7rTpwVJB34LNIyk+bIhcQZcd99HnMEcE4EMFk0V8O740CjjbCV+HJwjEi25
+      P49C5baavF68AL60j8CqyEEGl+V5Fu1zBHGJAvJ8f6rtZkDZ14eqLG9AoNFPrH2l
+      E3tPJGR0lR4VIX9izMJwkCOOuuHR8ewhbT2gk64apJNreynNHdQ5xfQatHpprsbJ
+      z+8EPgECgYEA/wJmRNpmMnYtUpLTxevoun5q0aTr6fkVw2RqHEZdIc+oLaGZYjA+
+      7FZFNXbNCQAb/IhxiM24Mu7WhyGioxQ0VxnD/ExMj5rOL/S4xAa3mdT6UusOrFVg
+      M5NapuX52lHXjFN/w08jbdbKl1lVH6VxdvCOeNnb09vgX3Hyp8WOC+8CgYEA6CCK
+      1YKCb2N69+MhamTiygM4DlZm716wUJgF5TyL8fyuu1PREaD0CXSg8D+sjeLemJ53
+      kGIooj7Xy2lcj4v2cwPWNnul+AkMgMfWy/SRowKSGtDMC7qQdscmwOShP4gKAhjt
+      XuKfof+R6sII1pSX6WWiQ0MqJlCs9MCGL0q5LpECgYA3+R3bhRijgN8H3eSP7+0g
+      ajkmFQ4XSC4nujW0SRmOH1dp1KunKrHVDEaaqp3smNKLxqMtBQKmY1hBRve81eV7
+      LNOg4Fp5tuAFFLEtjc/k+yOK6b9Jwl+gUnq2YYpLCmXGjllf1FIRfPDw8ZHGpXjX
+      Q4vyKNeglAWWzZsWij1YjwKBgQCdH5H6ThoOXe8ZphOzWdCtXxptkgyhEJ4WH6E1
+      9xLfXOPFh0moPiOR1vEtTlx1ulBkTDewctEAabtWQ95UiC/s0HcKcA36490juqFp
+      cwW1qoLNRfIoKkOpMsrHnLqNL39exhK+vHXDiSPzHR4waWqeoJ4CG4+HWeqIzVzG
+      3DSXEQKBgGprLRrnw0cgeVqat9xsoSMTA2I9In4Z5r69KjT4j+XvlosusNcmtCyE
+      e0P0z50t2qxy4yw9Gx37fZmfo5ufk/occ+MAi/RkLBJigu1eMOEEFyhTi/RNSKaz
+      zmfnyFv6hGAtMzOpzs5X0KhuIFO2U/KMQWqTiuFngtVsovyq+Jem
+      -----END RSA PRIVATE KEY-----
+    ca: |
+      -----BEGIN CERTIFICATE-----
+      MIIDYTCCAkmgAwIBAgIUPJpz/wf87WiEeOUuLya9e38DOZ4wDQYJKoZIhvcNAQEL
+      BQAwJDEiMCAGA1UEAxMZaDJvLTQtMTM5Ni5oMm8udm13YXJlLmNvbTAeFw0yMjA5
+      MjExNTMyNDNaFw0zMjA5MTgxNTMzMTNaMCQxIjAgBgNVBAMTGWgyby00LTEzOTYu
+      aDJvLnZtd2FyZS5jb20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCs
+      edL2yqiP0CAy9vAvKUlE9pxraQGUgRteqt/JinKltN3+bwQmTJ1+2eShalEa/JE2
+      JYE8nH2ESQ9xQ5gf5jmmGMMJQ42gSxi5U/DCqpPHemngWplSXv66z6xAjq4WUsNo
+      myreikUDWor3xtKKvm9rz83dtlLy1Uo3lGqRMxEXftBjuB4zsczCoBVY3jPzlTL8
+      Mn5RsLuqXAFCd5l28H8GtX5A16uTZxAXF8OJXCdyFQLwc1tjNkC2zKld8QPBhdpy
+      S/C9bfgY4z3rfwwnW97QWy/7WDuFb3tKPqk0pqwjjqiegWA97fbVndiUommZn4mr
+      t2ASoR/L8XfV+tDHlC1JAgMBAAGjgYowgYcwDgYDVR0PAQH/BAQDAgEGMA8GA1Ud
+      EwEB/wQFMAMBAf8wHQYDVR0OBBYEFIzYMdeP1jdm7x9Un+E+cAzWckouMB8GA1Ud
+      IwQYMBaAFIzYMdeP1jdm7x9Un+E+cAzWckouMCQGA1UdEQQdMBuCGWgyby00LTEz
+      OTYuaDJvLnZtd2FyZS5jb20wDQYJKoZIhvcNAQELBQADggEBAIVaOxTVpuClVpLD
+      STUyU2yP4OMTR6BOP8q2LvbPGyaWFKbOY7Ti7FN8K7JJAZkRynj1orV+tQX+51V0
+      ZWCCP/JGTtJ75YNitDKru53ZYvC7Kbd9QF0JL00yyMtH2rCDuvNI5Q6l2zTLVh/N
+      Urw449PhI9O0MNFEow+4DIDst/aNhS09u0avcGkt33B8gc8CCZGMI/jSsslFk9kb
+      O710R18SezvmLuGBVDJXJ+ck3HceYXZeuHg4yI2hZklA0zamUpWiS1FuUIAQ8ug9
+      DWgVomc4NY4YlWw4F/BKLABsUsxStVrc8hdfjWn/TUH9D5MqNx+23re2tPQrnUXu
+      q96+FEA=
+      -----END CERTIFICATE-----

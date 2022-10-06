@@ -1,0 +1,120 @@
+#@data/values
+---
+h2o:
+  tenant: h2o-4-1222 #! Supplied by H2O
+  dns_subdomain: h2o-4-1222.h2o.vmware.com #! Suggest H2O_SUB_DOMAIN
+avi:
+  admin_username: admin #! Supplied by H2O
+  admin_password: "REDACTED" #! Supplied by H2O
+  controller_host: avi01.h2o-4-1222.h2o.vmware.com #! Supplied by H2O
+  dns_subdomain: h2o-4-1222.h2o.vmware.com #! Suggest H2O_SUB_DOMAIN
+vsphere:
+  vcenter: vc01.h2o-4-1222.h2o.vmware.com #! Supplied by H2O
+  admin_username: administrator@vsphere.local #! Supplied by H2O
+  admin_password: "REDACTED" #! Supplied by H2O
+  standard_user_password: "REDACTED" #! You can pick this one.
+  supervisor:
+    host: vc01cl01-wcp.h2o-4-1222.h2o.vmware.com #! This should be from vCenter Menu->Workload Management->Supervisor Clusters
+    guest_cluster_version: "v1.22.9+vmware.1-tkg.1.cc71bc8"
+vm_service:
+  vm:
+    public_key: "ssh-rsa AAAAREDACTED" #! Optional.  If you set, you should have the matching private key in order to access VM's created by the VM service
+    admin_user: admin #! Optional.  If you set, you can use this user along with the user id and password, to ssh into VM service VMs
+    admin_password: "REDACTED" #! Optional.  If you set, you can use this password along with the user id, vmware to ssh into VM service VMs   
+    image_name: centos-stream-8-vmservice-v1alpha1-1638306496810 #! Ensure this matches the image name in your content repository
+    class_name: best-effort-medium #! This is the vm class you want to use
+    storage_class: vc01cl01-t0compute #! Ensure this matches the storage class name in your environment
+    network_type: vsphere-distributed #! Valid values are vsphere-distributed or nsx-t
+    network_name: user-workload #! For VDS, this must be the TKGS network name associated with the vNamespace.  For NSX-T this can be optional.  It was tested for NSX-T with blank value
+tmc:
+  context: east-se #! Update to the name of your preconfigured TMC CLI context
+  management_cluster_name: h2o-4-1222-sup #! Update to the name of your mangaement cluster in TMC
+  cluster_group: h2o-4-1222
+vault:
+  host: vault.h2o-4-1222.h2o.vmware.com #! update based upon the subdomain provided by H2O
+  vault_hcl: |
+    # Full configuration options can be found at https://www.vaultproject.io/docs/configuration
+    ui = true
+    cluster_name = "vault-cluster"
+    log_level = "info"
+
+    storage "file" {
+      path = "/opt/vault/data"
+    }
+
+    # HTTP listener
+    listener "tcp" {
+    address = "0.0.0.0:8200"
+    tls_disable = 1
+    }
+
+    # HTTPS listener
+    # listener "tcp" {
+    #   address       = "0.0.0.0:8200"
+    #   tls_cert_file = "/opt/vault/tls/tls.crt"
+    #   tls_key_file  = "/opt/vault/tls/tls.key"
+    #   tls_disable = 1
+    # }
+harbor:
+  host: harbor.h2o-4-1222.h2o.vmware.com #! Suggest "harbor." + H2O_SUB_DOMAIN
+  username: admin
+  password: "REDACTED"
+  #! The hostname and harbor_admin_password should be modified below based upon the values above
+  config_yaml: |
+    #! Customized Portions...
+    hostname: harbor.h2o-4-1222.h2o.vmware.com
+    harbor_admin_password: "REDACTED"
+    #! Boilerplate
+    http:
+      port: 80
+    https:
+      port: 443
+      certificate: /harbor/harbor.cert
+      private_key: /harbor/harbor_key.key
+    database:
+      password: REDACTED
+      max_idle_conns: 50
+      max_open_conns: 1000
+    data_volume: /data
+    trivy:
+      ignore_unfixed: false
+      skip_update: false
+      insecure: false
+    jobservice:
+      max_job_workers: 10
+    notification:
+      webhook_job_max_retry: 10
+    chart:
+      absolute_url: disabled
+    log:
+      level: info
+      local:
+        rotate_count: 50
+        rotate_size: 200M
+        location: /var/log/harbor
+    _version: 2.2.0
+    proxy:
+      http_proxy:
+      https_proxy:
+      no_proxy:
+      components:
+        - core
+        - jobservice
+        - trivy
+  #! Must update this with valid certs
+  tls:
+    certificate: |
+      -----BEGIN CERTIFICATE-----
+      REDACTED
+      -----END CERTIFICATE-----
+      -----BEGIN CERTIFICATE-----
+      REDACTED
+      -----END CERTIFICATE-----
+    private_key: |
+      -----BEGIN RSA PRIVATE KEY-----
+      REDACTED
+      -----END RSA PRIVATE KEY-----
+    ca: |
+      -----BEGIN CERTIFICATE-----
+      REDACTED
+      -----END CERTIFICATE-----

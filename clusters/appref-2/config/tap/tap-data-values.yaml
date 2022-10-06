@@ -97,6 +97,7 @@ excluded_packages:
 - contour.tanzu.vmware.com
 - ootb-supply-chain-testing-scanning.tanzu.vmware.com
 - ootb-supply-chain-testing.tanzu.vmware.com
+- metadata-store.apps.tanzu.vmware.com
 package_overlays:
 - name: ootb-templates
   secrets:

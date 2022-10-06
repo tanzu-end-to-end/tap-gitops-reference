@@ -1,0 +1,121 @@
+---
+common:
+  h2o:
+    dns_subdomain: h2o-4-1222.h2o.vmware.com #! Supplied by H2O
+  vault:
+    token: REDACTED #! Will be instructed to populate this when following the readme
+    role: h2o-4-1222-dot-h2o-dot-vmware-dot-com #! Use H2O subdomain name as shown
+  #! You will be instructed to populate the value below when following the readme
+  ca: |
+    -----BEGIN CERTIFICATE-----
+    REDACTED
+    -----END CERTIFICATE-----
+  git:
+    #! url: https://github.com/tanzu-end-to-end/tapp-gitops-ref
+    url: ssh://git@ssh.dev.azure.com/v3/yourorg/h2o-tap-lab/gitops-platform
+    ref: origin/main
+  tap:
+    org_name: "VMware Waterworks"
+    tanzunet:
+      username: bkirkland@pivotal.io
+      password: REDACTED
+    registry:
+      host: harbor.h2o-4-1222.h2o.vmware.com
+      username: admin
+      password: "REDACTED"
+      repositories:
+        buildService: tap/tbs
+        ootbSupplyChain: tap/sc
+    cosign:
+      public_key: |
+        -----BEGIN PUBLIC KEY-----
+        REDACTED
+        -----END PUBLIC KEY-----
+  repos:
+    ssh:
+      host: ssh.dev.azure.com
+      knownhosts: |
+        ssh.dev.azure.com ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC7Hr1oTWqNqOlzGJOfGJ4NakVyIzf1rXYd4d7wo6jBlkLvCA4odBlL0mDUyZ0/QUfTTqeu+tm22gOsv+VrVTMk6vwRU75gY/y9ut5Mb3bR5BV58dKXyq9A9UeB5Cakehn5Zgm6x1mKoVyf+FFn26iYqXJRgzIZZcZ5V6hrE0Qg39kZm4az48o0AUbf6Sp4SLdvnuMa2sVNwHBboS7EJkm57XQPVU3/QpyNLHbWDdzwtrlS+ez30S3AdYhLKEOxAG8weOnyrtLJAUen9mTkol8oII1edf7mWWbWVf0nBmly21+nZcmCTISQBtdcyPaEno7fFQMDD26/s0lfKob4Kw8H
+        ssh.dev.azure.com,20.42.134.4 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC7Hr1oTWqNqOlzGJOfGJ4NakVyIzf1rXYd4d7wo6jBlkLvCA4odBlL0mDUyZ0/QUfTTqeu+tm22gOsv+VrVTMk6vwRU75gY/y9ut5Mb3bR5BV58dKXyq9A9UeB5Cakehn5Zgm6x1mKoVyf+FFn26iYqXJRgzIZZcZ5V6hrE0Qg39kZm4az48o0AUbf6Sp4SLdvnuMa2sVNwHBboS7EJkm57XQPVU3/QpyNLHbWDdzwtrlS+ez30S3AdYhLKEOxAG8weOnyrtLJAUen9mTkol8oII1edf7mWWbWVf0nBmly21+nZcmCTISQBtdcyPaEno7fFQMDD26/s0lfKob4Kw8H
+        20.41.6.2 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC7Hr1oTWqNqOlzGJOfGJ4NakVyIzf1rXYd4d7wo6jBlkLvCA4odBlL0mDUyZ0/QUfTTqeu+tm22gOsv+VrVTMk6vwRU75gY/y9ut5Mb3bR5BV58dKXyq9A9UeB5Cakehn5Zgm6x1mKoVyf+FFn26iYqXJRgzIZZcZ5V6hrE0Qg39kZm4az48o0AUbf6Sp4SLdvnuMa2sVNwHBboS7EJkm57XQPVU3/QpyNLHbWDdzwtrlS+ez30S3AdYhLKEOxAG8weOnyrtLJAUen9mTkol8oII1edf7mWWbWVf0nBmly21+nZcmCTISQBtdcyPaEno7fFQMDD26/s0lfKob4Kw8H
+        ssh.dev.azure.com. ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC7Hr1oTWqNqOlzGJOfGJ4NakVyIzf1rXYd4d7wo6jBlkLvCA4odBlL0mDUyZ0/QUfTTqeu+tm22gOsv+VrVTMk6vwRU75gY/y9ut5Mb3bR5BV58dKXyq9A9UeB5Cakehn5Zgm6x1mKoVyf+FFn26iYqXJRgzIZZcZ5V6hrE0Qg39kZm4az48o0AUbf6Sp4SLdvnuMa2sVNwHBboS7EJkm57XQPVU3/QpyNLHbWDdzwtrlS+ez30S3AdYhLKEOxAG8weOnyrtLJAUen9mTkol8oII1edf7mWWbWVf0nBmly21+nZcmCTISQBtdcyPaEno7fFQMDD26/s0lfKob4Kw8H
+      privatekey: |
+        -----BEGIN RSA PRIVATE KEY-----
+        REDACTED
+        -----END RSA PRIVATE KEY-----
+      publickey: ssh-rsa AAAREDACTED
+  sso:
+    #! This is used to configure AppSSO AuthServer which is tested by Animal Rescue.
+    #! Use https://docs.vmware.com/en/VMware-Spring-Cloud-Gateway-for-Kubernetes/1.1/scg-k8s/GUID-sso-setup-guide.html for instructions on setting up Okta
+    issuer_uri: https://dev-xxxxxx.okta.com/oauth2/xxxxxxxxxxxxxxxxxxxx
+    client_id: REDACTED
+    client_secret: REDACTED
+    issuer_domain: https://dev-xxxxxx.okta.com
+    auth_server_id: xxxxxxxxxxxxxxxxxxxx #! Matches the token in the issuer_uri after the /oauth2/
+clusters:
+  view:
+    enabled: true
+    catalog: https://dev.azure.com/yourorg/h2o-tap-lab/_git/software-catalog?path=/catalog-info.yaml
+    catalog_token: REDACTED
+    domain: tap-view.h2o-4-1222.h2o.vmware.com #! Suggest "tap-view." + H2O_SUB_DOMAIN
+    tap_gui:
+      allow_guest_access: true
+      #! These will be autopopulated
+      build:
+        #! api_server_url While build context is active: kubectl config view --minify -o jsonpath='{.clusters[0].cluster.server}'
+        #! sa_token While build context is active: kubectl -n tap-gui get secret $(kubectl -n tap-gui get sa tap-gui-viewer -o=json | jq -r '.secrets[0].name') -o=json | jq -r '.data["token"]' | base64 --decode
+        api_server_url: REDACTED
+        api_server_ca: REDACTED
+        sa_token: REDACTED
+      run_test:
+        api_server_url: REDACTED
+        api_server_ca: REDACTED
+        sa_token: REDACTED
+      run_prod:
+        api_server_url: REDACTED
+        api_server_ca: REDACTED
+        sa_token: REDACTED
+      iterate:
+        api_server_url: REDACTED
+        api_server_ca: REDACTED
+        sa_token: REDACTED
+    metadatastore:
+      #! These will be autopopulated
+      auth_token: REDACTED
+      app_ca: REDACTED
+  build:
+    enabled: true
+    domain: tap-build.h2o-4-1222.h2o.vmware.com #! Suggest "tap-build." + H2O_SUB_DOMAIN
+    metadatastore:
+      #! These will be autopopulated
+      #! ca From view cluster: kubectl get secret -n metadata-store ingress-cert -o json | jq -r ".data.\"ca.crt\""
+      #! auth_token From view cluster: kubectl get secrets -n metadata-store -o jsonpath="{.items[?(@.metadata.annotations['kubernetes\.io/service-account\.name']=='metadata-store-read-write-client')].data.token}" | base64 -d)
+      auth_token: REDACTED
+      ingress_ca: REDACTED
+    gitops_server_address: ssh://git@ssh.dev.azure.com/v3/yourorg #! your ADO org
+    gitops_repository_owner: h2o-tap-lab #! Name of ADO project
+  iterate:
+    enabled: true
+    domain: tap-iterate.h2o-4-1222.h2o.vmware.com #! Suggest "tap-iterate." + H2O_SUB_DOMAIN
+  run_test:
+    enabled: true
+    domain: tap-run-test.h2o-4-1222.h2o.vmware.com #! Suggest "tap-run-test." + H2O_SUB_DOMAIN
+  run_prod:
+    #! Currently disabled due to lack of IPs
+    enabled: false
+    domain: tap-run-prod.h2o-4-1222.h2o.vmware.com #! Suggest "tap-run-prod." + H2O_SUB_DOMAIN
+systems:
+  spring_petclinic:
+    gitops_repo_url: ssh://git@ssh.dev.azure.com/v3/yourorg/h2o-tap-lab/gitops-spring-petclinic
+    spring_petclinic_component_code_repo_url: ssh://git@ssh.dev.azure.com/v3/yourorg/tap-lab-spring-petclinic/spring-petclinic
+  canary:
+    gitops_repo_url: ssh://git@ssh.dev.azure.com/v3/yourorg/h2o-tap-lab/gitops-canary
+    hello_component_code_repo_url: ssh://git@ssh.dev.azure.com/v3/yourorg/tap-lab-canary-app/hello
+    appsso_starter_java_component_code_repo_url: ssh://git@ssh.dev.azure.com/v3/yourorg/tap-lab-canary-app/appsso-starter-java
+  animal_rescue:
+    gitops_repo_url: ssh://git@ssh.dev.azure.com/v3/yourorg/h2o-tap-lab/gitops-animal-rescue
+    mono_repo_code_repo_url: ssh://git@ssh.dev.azure.com/v3/yourorg/tap-lab-animal-rescue/animal-rescue
+  dotnet_todos:
+    gitops_repo_url: ssh://git@ssh.dev.azure.com/v3/yourorg/h2o-tap-lab/gitops-dotnet-todos
+    mono_repo_code_repo_url: ssh://git@ssh.dev.azure.com/v3/yourorg/tap-lab-dotnet-todos/dotnet-todos
+    db_password: "REDACTED"
