@@ -20,5 +20,5 @@ spec:
     git:
       ref:
         branch: test
-      url: git@github.com:tanzu-end-to-end/trp-gitops-canary.git
+      url: https://github.com/tanzu-end-to-end/trp-gitops-canary
 
