@@ -14,4 +14,4 @@ tap:
     host: harbor.h2o-4-1396.h2o.vmware.com
     location: tap/sc
   base:
-    domain: build.h2o-4-1396.h2o.vmware.com
+    domain: run.h2o-4-1396.h2o.vmware.com
