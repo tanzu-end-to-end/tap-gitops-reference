@@ -17,9 +17,6 @@ metadata:
   name: hello
   namespace: canary-test
 spec:
-  params:
-  - name: gitops_ssh_secret
-    value: git-https
   source:
     git:
       ref:
