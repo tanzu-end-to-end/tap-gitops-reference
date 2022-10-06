@@ -19,10 +19,10 @@ spec:
   #
   # Data Pod features
   #
-  storageClassName: default
+  storageClassName: vc01cl01-t0compute
   storageSize: 800M
   cpu: "0.2"
   memory: 800Mi
  
-  monitorStorageClassName: default
+  monitorStorageClassName: vc01cl01-t0compute
   monitorStorageSize: 1G
