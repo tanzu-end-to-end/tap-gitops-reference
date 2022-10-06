@@ -13,7 +13,7 @@ metadata:
     carto.run/workload-name: hello
     carto.run/workload-namespace: canary
   name: hello
-  namespace: canary
+  namespace: canary-test
 spec:
   params:
     - name: gitops_ssh_secret
