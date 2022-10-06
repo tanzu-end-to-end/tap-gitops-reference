@@ -10,7 +10,7 @@ metadata:
     carto.run/supply-chain-name: source-test-scan-to-url
     carto.run/workload-name: spring-petclinic
     carto.run/workload-namespace: spring-petclinic
-  name: hello
+  name: spring-petclinic
   namespace: canary-test
 spec:
   params:

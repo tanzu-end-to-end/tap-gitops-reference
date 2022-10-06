@@ -10,7 +10,7 @@ metadata:
     carto.run/supply-chain-name: source-test-scan-to-url
     carto.run/workload-name: dotnet-todos-app
     carto.run/workload-namespace: dotnet-todos-app
-  name: hello
+  name: dotnet-todos-app
   namespace: canary-test
 spec:
   params:
