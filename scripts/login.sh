@@ -1,6 +1,7 @@
 #!/bin/bash -e
 
 INFRA_LAB_CONFIG_YAML=local-config/infra-lab-values.yaml
+export VSPHERE_WITH_TANZU_PASSWORD="GFYsubUF0Ety43dBwV-"
 
 # if first argument is "admin" then use the H2O login info
 if [ "$1" = "admin" ]; then
@@ -16,7 +17,14 @@ export SUPERVISOR_CLUSTER=$(yq e .vsphere.supervisor.host $INFRA_LAB_CONFIG_YAML
 # if there is no second argument, then assumed just trying to loginto the supervisor cluster, else log into TKC
 if [ -z "$2" ]; then
 
-    kubectl vsphere login --server $SUPERVISOR_CLUSTER -u $USER --insecure-skip-tls-verify
+   KUBECTL_VSPHERE_LOGIN_COMMAND=$(expect -c "
+    spawn kubectl vsphere  login --server=$SUPERVISOR_CLUSTER -u $USER --insecure-skip-tls-verify
+    expect \"*?assword:*\"
+    send -- \"$VSPHERE_WITH_TANZU_PASSWORD\r\"
+    expect eof
+    ")
+
+    #kubectl vsphere login --server $SUPERVISOR_CLUSTER -u $USER --insecure-skip-tls-verify
 
     kubectl config use-context $SUPERVISOR_CLUSTER
 
@@ -36,11 +44,15 @@ elif [ "$2" = "all" ]; then
 
 
 else
-
     export TKC_NAME=$3
     export VSPHERE_NAMESPACE_NAME=$2
-
-    kubectl vsphere login --server $SUPERVISOR_CLUSTER -u $USER --tanzu-kubernetes-cluster-name $TKC_NAME --tanzu-kubernetes-cluster-namespace $VSPHERE_NAMESPACE_NAME --insecure-skip-tls-verify
+    KUBECTL_VSPHERE_LOGIN_COMMAND=$(expect -c "
+    spawn kubectl vsphere  login --server=$SUPERVISOR_CLUSTER --vsphere-username $USER --tanzu-kubernetes-cluster-name $TKC_NAME --tanzu-kubernetes-cluster-namespace $VSPHERE_NAMESPACE_NAME --insecure-skip-tls-verify
+    expect \"*?assword:*\"
+    send -- \"$VSPHERE_WITH_TANZU_PASSWORD\r\"
+    expect eof
+    ")
+    #//kubectl vsphere login --server $SUPERVISOR_CLUSTER -u $USER --tanzu-kubernetes-cluster-name $TKC_NAME --tanzu-kubernetes-cluster-namespace $VSPHERE_NAMESPACE_NAME --insecure-skip-tls-verify
 
     kubectl config use-context $TKC_NAME
 

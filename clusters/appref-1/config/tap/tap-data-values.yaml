@@ -74,7 +74,7 @@ tap_gui:
       - type: config
         clusters:
         - url:  #@ data.values.tap.tap_gui.iterate.api_server_url
-          name: tap-iterate
+          name: tap-view
           authProvider: serviceAccount
           serviceAccountToken: #@ data.values.tap.tap_gui.iterate.sa_token
           #! skipMetricsLookup per https://vmware.slack.com/archives/C02D60T1ZDJ/p1661527343469509
@@ -82,7 +82,7 @@ tap_gui:
           skipMetricsLookup: true
           caData: #@ data.values.tap.tap_gui.iterate.api_server_ca
         - url:  #@ data.values.tap.tap_gui.view.api_server_url
-          name: tap-build
+          name: tap-run
           authProvider: serviceAccount
           serviceAccountToken: #@ data.values.tap.tap_gui.view.sa_token
           skipTLSVerify: false
