@@ -9,9 +9,9 @@ metadata:
     app.tanzu.vmware.com/deliverable-type: web
     carto.run/supply-chain-name: source-test-scan-to-url
     carto.run/workload-name: dotnet-todos-app
-    carto.run/workload-namespace: dotnet-todos-app
+    carto.run/workload-namespace: dotnet-todos
   name: dotnet-todos-app
-  namespace: canary-test
+  namespace: dotnet-todos-test
 spec:
   params:
     - name: gitops_sub_path
