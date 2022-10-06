@@ -1,5 +1,4 @@
 #@ load("@ytt:data", "data")
-
 ---
 apiVersion: carto.run/v1alpha1
 kind: Deliverable
@@ -10,16 +9,15 @@ metadata:
     app.tanzu.vmware.com/deliverable-type: web
     carto.run/supply-chain-name: source-test-scan-to-url
     carto.run/workload-name: dotnet-todos-api
-    carto.run/workload-namespace: dotnet-todos
-  name: dotnet-todos-api
-  namespace: dotnet-todos-test
+    carto.run/workload-namespace: dotnet-todos-api
+  name: hello
+  namespace: canary-test
 spec:
   params:
-  - name: gitops_ssh_secret
-    value: git-ssh
+    - name: gitops_sub_path
+      value: config/dotnet-todos/dotnet-todos-api
   source:
     git:
       ref:
         branch: test
       url: https://github.com/tanzu-end-to-end/trp-gitops-dotnet-todos
-    subPath: config/dotnet-todos/dotnet-todos-api
