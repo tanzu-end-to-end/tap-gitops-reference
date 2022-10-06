@@ -1,28 +1,28 @@
 #@ load("@ytt:data", "data")
+#@ load("@ytt:data", "data")
 
 ---
 apiVersion: carto.run/v1alpha1
 kind: Deliverable
 metadata:
   labels:
-    app.tanzu.vmware.com/deliverable-type: web
-    carto.run/cluster-template-name: deliverable-template
-    carto.run/resource-name: deliverable
-    carto.run/supply-chain-name: source-test-scan-to-url
-    carto.run/template-kind: ClusterTemplate
     app.kubernetes.io/component: deliverable
     app.kubernetes.io/part-of: hello
+    app.tanzu.vmware.com/deliverable-type: web
+    carto.run/supply-chain-name: source-test-scan-to-url
     carto.run/workload-name: hello
     carto.run/workload-namespace: canary
   name: hello
-  namespace: canary-test
+  namespace: canary
 spec:
   params:
-  - name: gitops_ssh_secret
-    value: git-ssh
+    - name: gitops_ssh_secret
+      value: git-ssh
+    - name: gitops_sub_path
+      value: config/canary/hello
   source:
     git:
       ref:
         branch: test
       url: git@github.com:tanzu-end-to-end/trp-gitops-canary.git
-    subPath: config/canary/hello
+
