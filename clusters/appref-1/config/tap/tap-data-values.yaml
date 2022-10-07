@@ -8,7 +8,8 @@ ceip_policy_disclosed: true #! Installation fails if this is set to 'false'
 appliveview_connector:
   backend:
     host: #@ data.values.tap.appliveview_connector
-
+    ingressEnabled: true
+    caCertData: #@ data.values.tap.ca
 buildservice:
   kp_default_repository: #@ "{}/{}".format(data.values.tap.credentials.registry.host, data.values.tap.credentials.registry.repositories.buildService)
   kp_default_repository_username: #@ data.values.tap.credentials.registry.username
@@ -124,6 +125,7 @@ ootb_supply_chain_testing_scanning:
       server_kind: github
       pull_request_title: Ready for review
       pull_request_body: Pull Request by TAP
+
 appliveview:
   tls:
     namespace: tap-install
