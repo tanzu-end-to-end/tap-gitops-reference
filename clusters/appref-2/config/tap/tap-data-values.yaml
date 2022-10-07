@@ -100,9 +100,6 @@ excluded_packages:
 - ootb-supply-chain-testing-scanning.tanzu.vmware.com
 - ootb-supply-chain-testing.tanzu.vmware.com
 - metadata-store.apps.tanzu.vmware.com
-- scanning.apps.tanzu.vmware.com
-- backend.appliveview.tanzu.vmware.com
-- grype.scanning.apps.tanzu.vmware.com
 package_overlays:
 - name:  cnrs
   secrets:
