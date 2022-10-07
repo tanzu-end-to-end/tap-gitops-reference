@@ -127,10 +127,10 @@ ootb_supply_chain_testing_scanning:
       pull_request_body: Pull Request by TAP
 
 appliveview:
+  ingressEnabled: true
   tls:
     namespace: tap-install
     #! Not consistent with others
-    ingressEnabled: true
     secretName: tap-tls-secret
 scanning:
   metadataStore:
