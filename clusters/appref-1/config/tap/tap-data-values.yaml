@@ -130,6 +130,7 @@ appliveview:
   tls:
     namespace: tap-install
     #! Not consistent with others
+    ingressEnabled: true
     secretName: tap-tls-secret
 scanning:
   metadataStore:
