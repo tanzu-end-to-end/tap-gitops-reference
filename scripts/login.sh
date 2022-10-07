@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash -ex
 
 : ${PARAMS_YAML?"Need to set PARAMS_YAML environment variable"}
 
@@ -48,13 +48,13 @@ elif [ "$2" = "all" ]; then
 else
     export TKC_NAME=$3
     export VSPHERE_NAMESPACE_NAME=$2
-    KUBECTL_VSPHERE_LOGIN_COMMAND=$(expect -c "
-    spawn kubectl vsphere  login --server=$SUPERVISOR_CLUSTER --vsphere-username $USER --tanzu-kubernetes-cluster-name $TKC_NAME --tanzu-kubernetes-cluster-namespace $VSPHERE_NAMESPACE_NAME --insecure-skip-tls-verify
-    expect \"*?assword:*\"
-    send -- \"$VSPHERE_WITH_TANZU_PASSWORD\r\"
-    expect eof
-    ")
-    #//kubectl vsphere login --server $SUPERVISOR_CLUSTER -u $USER --tanzu-kubernetes-cluster-name $TKC_NAME --tanzu-kubernetes-cluster-namespace $VSPHERE_NAMESPACE_NAME --insecure-skip-tls-verify
+#    KUBECTL_VSPHERE_LOGIN_COMMAND=$(expect -c "
+#    spawn kubectl vsphere  login --server=$SUPERVISOR_CLUSTER -u $1 --tanzu-kubernetes-cluster-name $TKC_NAME --tanzu-kubernetes-cluster-namespace $VSPHERE_NAMESPACE_NAME --insecure-skip-tls-verify
+#    expect \"*?assword:*\"
+#    send -- \"$VSPHERE_WITH_TANZU_PASSWORD\r\"
+#    expect eof
+#    ")
+    kubectl vsphere login --server $SUPERVISOR_CLUSTER -u $USER --tanzu-kubernetes-cluster-name $TKC_NAME --tanzu-kubernetes-cluster-namespace $VSPHERE_NAMESPACE_NAME --insecure-skip-tls-verify
 
     kubectl config use-context $TKC_NAME
 

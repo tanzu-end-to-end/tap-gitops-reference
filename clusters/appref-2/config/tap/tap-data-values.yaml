@@ -8,7 +8,7 @@ ceip_policy_disclosed: true #! Installation fails if this is set to 'false'
 appliveview_connector:
   backend:
     host: appliveview.ref.h2o-4-1396.h2o.vmware.com
-    ingressEnabled: false
+    ingressEnabled: true
     caCertData: #@ data.values.tap.ca
 cnrs:
   domain_name: #@ data.values.tap.domains.base
@@ -100,6 +100,9 @@ excluded_packages:
 - ootb-supply-chain-testing-scanning.tanzu.vmware.com
 - ootb-supply-chain-testing.tanzu.vmware.com
 - metadata-store.apps.tanzu.vmware.com
+- scanning.apps.tanzu.vmware.com
+- backend.appliveview.tanzu.vmware.com
+- grype.scanning.apps.tanzu.vmware.com
 package_overlays:
 - name:  cnrs
   secrets:
