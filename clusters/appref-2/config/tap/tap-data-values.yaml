@@ -101,6 +101,7 @@ excluded_packages:
 - metadata-store.apps.tanzu.vmware.com
 - scanning.apps.tanzu.vmware.com
 - backend.appliveview.tanzu.vmware.com
+- grype.scanning.apps.tanzu.vmware.com
 package_overlays:
 - name:  cnrs
   secrets:
