@@ -62,7 +62,7 @@ metadata:
   name: default-auth-server
   namespace: service-instances
   annotations:
-    cert-manager.io/cluster-issuer: letsencrypt-contour-cluster-issuer
+    cert-manager.io/cluster-issuer: vault-cluster-issuer
     ingress.kubernetes.io/force-ssl-redirect: "true"
     kubernetes.io/ingress.class: contour
     kubernetes.io/tls-acme: "true"

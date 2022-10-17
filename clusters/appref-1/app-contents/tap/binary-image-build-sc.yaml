@@ -47,8 +47,8 @@ spec:
     - name: registry
       value:
         ca_cert_data: ""
-        repository: tap/sc
-        server: harbor.one.appref.end2end.link
+        repository: jeff/sc
+        server: harbor.h2o-4-1396.h2o.vmware.com
     templateRef:
       kind: ClusterTemplate
       name: deliverable-template
@@ -59,8 +59,8 @@ spec:
     - name: registry
       value:
         ca_cert_data: ""
-        repository: tap/sc
-        server: harbor.one.appref.end2end.link
+        repository: jeff/sc
+        server: harbor.h2o-4-1396.h2o.vmware.com
     - default: default
       name: clusterBuilder
     - default: ./Dockerfile
@@ -125,7 +125,7 @@ spec:
       value:
         ca_cert_data: ""
         repository: tap/sc
-        server: harbor.one.appref.end2end.link
+        server: harbor.h2o-4-1396.h2o.vmware.com
     templateRef:
       kind: ClusterTemplate
       name: config-writer-and-pull-requester-template

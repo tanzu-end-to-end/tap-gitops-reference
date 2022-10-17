@@ -7,7 +7,9 @@ profile: full
 ceip_policy_disclosed: true #! Installation fails if this is set to 'false'
 appliveview_connector:
   backend:
-    host: #@ data.values.tap.appliveview_connector
+    host: appliveview.ref.h2o-4-1396.h2o.vmware.com
+    ingressEnabled: true
+    caCertData: #@ data.values.tap.ca
 cnrs:
   domain_name: #@ data.values.tap.domains.base
   ingress:
@@ -15,7 +17,6 @@ cnrs:
       namespace: tanzu-system-ingress
     external:
       namespace: tanzu-system-ingress
-    reuse_crds: true
 buildservice:
   kp_default_repository: #@ "{}/{}".format(data.values.tap.credentials.registry.host, data.values.tap.credentials.registry.repositories.buildService)
   kp_default_repository_username: #@ data.values.tap.credentials.registry.username
@@ -26,12 +27,12 @@ buildservice:
   enable_automatic_dependency_updates: true
 supply_chain: basic
 shared:
+  ca_cert_data: #@ data.values.tap.credentials.registry.ca_cert_data
   ingress_domain: #@ data.values.tap.domains.base
 learningcenter:
   ingressSecret: 
     secretName:  learningcenter-cert-tls
 tap_gui:
-  service_type: ClusterIP
   tls:
     namespace: tap-install
     secretName: tap-tls-secret
@@ -41,9 +42,9 @@ tap_gui:
       providers:
         okta:
           development:
-            clientId: #@ data.values.auth.clientId
-            clientSecret: #@ data.values.auth.clientSecret
-            audience: #@ data.values.auth.audience
+            clientId: #@ data.values.appsso.clientId
+            clientSecret: #@ data.values.appsso.clientSecret
+            audience: #@ data.values.appsso.audience
     supplyChain:
       enablePlugin: true
     app:
@@ -98,10 +99,11 @@ excluded_packages:
 - contour.tanzu.vmware.com
 - ootb-supply-chain-testing-scanning.tanzu.vmware.com
 - ootb-supply-chain-testing.tanzu.vmware.com
+- metadata-store.apps.tanzu.vmware.com
+- scanning.apps.tanzu.vmware.com
+- backend.appliveview.tanzu.vmware.com
+- grype.scanning.apps.tanzu.vmware.com
 package_overlays:
-- name: ootb-templates
-  secrets:
-  - name: honor-deliverable-subpath-overlay
 - name:  cnrs
   secrets:
   - name: cnrs-network-config-overlay

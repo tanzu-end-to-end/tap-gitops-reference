@@ -7,8 +7,9 @@ profile: full
 ceip_policy_disclosed: true #! Installation fails if this is set to 'false'
 appliveview_connector:
   backend:
-    #! host: #@ data.values.tap.appliveview_connector
-    host: appliveview.one.appref.end2end.link
+    host: #@ data.values.tap.appliveview_connector
+    ingressEnabled: true
+    caCertData: #@ data.values.tap.ca
 buildservice:
   kp_default_repository: #@ "{}/{}".format(data.values.tap.credentials.registry.host, data.values.tap.credentials.registry.repositories.buildService)
   kp_default_repository_username: #@ data.values.tap.credentials.registry.username
@@ -19,6 +20,7 @@ buildservice:
   enable_automatic_dependency_updates: true
 supply_chain: testing_scanning
 shared:
+  ca_cert_data: #@ data.values.tap.credentials.registry.ca_cert_data
   ingress_domain: #@ data.values.tap.domains.base
 learningcenter:
   ingressSecret: 
@@ -39,9 +41,9 @@ tap_gui:
       providers:
         okta:
           development:
-            clientId: #@ data.values.auth.clientId
-            clientSecret: #@ data.values.auth.clientSecret
-            audience: #@ data.values.auth.audience
+            clientId: #@ data.values.appsso.clientId
+            clientSecret: #@ data.values.appsso.clientSecret
+            audience: #@ data.values.appsso.audience
     techdocs:
       builder: 'external'
       publisher:
@@ -73,16 +75,20 @@ tap_gui:
       - type: config
         clusters:
         - url:  #@ data.values.tap.tap_gui.iterate.api_server_url
-          name: tap-iterate
+          name: tap-view
           authProvider: serviceAccount
           serviceAccountToken: #@ data.values.tap.tap_gui.iterate.sa_token
+          #! skipMetricsLookup per https://vmware.slack.com/archives/C02D60T1ZDJ/p1661527343469509
           skipTLSVerify: false
+          skipMetricsLookup: true
           caData: #@ data.values.tap.tap_gui.iterate.api_server_ca
         - url:  #@ data.values.tap.tap_gui.view.api_server_url
-          name: tap-build
+          name: tap-run
           authProvider: serviceAccount
           serviceAccountToken: #@ data.values.tap.tap_gui.view.sa_token
           skipTLSVerify: false
+          #! skipMetricsLookup per https://vmware.slack.com/archives/C02D60T1ZDJ/p1661527343469509
+          skipMetricsLookup: true
           caData: #@ data.values.tap.tap_gui.view.api_server_ca
     catalog:
         locations:
@@ -119,7 +125,9 @@ ootb_supply_chain_testing_scanning:
       server_kind: github
       pull_request_title: Ready for review
       pull_request_body: Pull Request by TAP
+
 appliveview:
+  ingressEnabled: true
   tls:
     namespace: tap-install
     #! Not consistent with others

@@ -14,14 +14,13 @@ envoy:
       #@ end
 #@ end
 ---
----
 apiVersion: v1
 kind: Secret
 metadata:
   name: contour-values
   namespace: #@ data.values.contour.namespace
   annotations:
-    kapp.k14s.io/change-rule.3: "delete after deleting contour"
+    kapp.k14s.io/change-rule: "delete after deleting contour"
 type: Opaque
 stringData:
   values.yml: #@ yaml.encode(config())

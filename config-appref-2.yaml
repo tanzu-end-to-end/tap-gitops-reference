@@ -2,16 +2,16 @@
 catalog: ""
 git:
   url: https://github.com/tanzu-end-to-end/tap-gitops-reference
-  ref: origin/main
+  ref: origin/h2o
 paths:
- - clusters/common/config
- - clusters/appref-2/config
+  - clusters/common/config
+  - clusters/appref-2/config
 tap:
   registry:
-    host: harbor.one.appref.end2end.link
+    host: harbor.h2o-4-1396.h2o.vmware.com
     location: tap/tbs
   supplychainregistry:
-    host: harbor.one.appref.end2end.link
+    host: harbor.h2o-4-1396.h2o.vmware.com
     location: tap/sc
   base:
-    domain: one.appref.end2end.link
+    domain: run.h2o-4-1396.h2o.vmware.com

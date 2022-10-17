@@ -1,5 +1,4 @@
 #@ load("@ytt:data", "data")
-
 ---
 apiVersion: carto.run/v1alpha1
 kind: Deliverable
@@ -15,11 +14,10 @@ metadata:
   namespace: dotnet-todos-test
 spec:
   params:
-  - name: gitops_ssh_secret
-    value: git-ssh
+    - name: gitops_sub_path
+      value: config/dotnet-todos/dotnet-todos-api
   source:
     git:
       ref:
         branch: test
       url: https://github.com/tanzu-end-to-end/trp-gitops-dotnet-todos
-    subPath: config/dotnet-todos/dotnet-todos-api

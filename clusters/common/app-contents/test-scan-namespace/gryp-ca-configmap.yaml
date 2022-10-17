@@ -1,0 +1,8 @@
+#@ load("@ytt:data", "data")
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grype-ca
+data:
+  ca.crt: #@ data.values.tap.credentials.registry.ca_cert_data

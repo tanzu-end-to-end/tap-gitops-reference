@@ -1,12 +1,11 @@
 #@ load("@ytt:data", "data")
-
 ---
 apiVersion: carto.run/v1alpha1
 kind: Deliverable
 metadata:
   labels:
     app.kubernetes.io/component: deliverable
-    app.kubernetes.io/part-of: dotnet-todos-app 
+    app.kubernetes.io/part-of: dotnet-todos-app
     app.tanzu.vmware.com/deliverable-type: web
     carto.run/supply-chain-name: source-test-scan-to-url
     carto.run/workload-name: dotnet-todos-app
@@ -15,11 +14,11 @@ metadata:
   namespace: dotnet-todos-test
 spec:
   params:
-  - name: gitops_ssh_secret
-    value: git-ssh
+    - name: gitops_sub_path
+      value: config/dotnet-todos/dotnet-todos-app
   source:
     git:
       ref:
         branch: test
       url: https://github.com/tanzu-end-to-end/trp-gitops-dotnet-todos
-    subPath: config/dotnet-todos/dotnet-todos-app
+

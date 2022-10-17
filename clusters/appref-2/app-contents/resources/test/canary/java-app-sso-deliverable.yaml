@@ -15,8 +15,8 @@ metadata:
   namespace: canary-test
 spec:
   params:
-  - name: gitops_ssh_secret
-    value: git-ssh
+  - name: gitops_sub_path
+    value: config/canary/appsso-starter-java
   source:
     git:
       ref:
