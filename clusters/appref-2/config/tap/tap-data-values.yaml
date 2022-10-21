@@ -7,7 +7,7 @@ profile: full
 ceip_policy_disclosed: true #! Installation fails if this is set to 'false'
 appliveview_connector:
   backend:
-    host: appliveview.ref.h2o-4-1396.h2o.vmware.com
+    host: appliveview.ref.appref.end2end.link
     ingressEnabled: true
     caCertData: #@ data.values.tap.ca
 cnrs:
