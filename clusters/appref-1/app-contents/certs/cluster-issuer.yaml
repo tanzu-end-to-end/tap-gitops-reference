@@ -22,3 +22,28 @@ metadata:
   namespace: cert-manager
 data:
   token: #@ base64.encode(data.values.vault.token)
+
+---
+#@ load("@ytt:data", "data")
+---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-contour-cluster-issuer
+  annotations:
+    kapp.k14s.io/change-group: cert-manager/cluster-issuer
+    kapp.k14s.io/change-rule: "upsert after upserting cert-manager"
+spec:
+  acme:
+    email: "platform-ops@pivotal.io"
+    privateKeySecretRef:
+      name: acme-account-key
+    server: https://acme-v02.api.letsencrypt.org/directory
+    solvers:
+      - dns01:
+          route53:
+            region: us-east-2
+            accessKeyID: #@ data.values.aws.aws_access_key_id
+            secretAccessKeySecretRef:
+              name: route53-credentials
+              key: aws_secret_access_key
