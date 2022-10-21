@@ -10,6 +10,6 @@ spec:
   secretName: tap-tls-secret
   issuerRef:
     kind: ClusterIssuer
-    name: vault-cluster-issuer
+    name: letsencrypt-contour-cluster-issuer
   dnsNames:
   - #@ data.values.tap.cert.cn

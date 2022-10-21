@@ -10,7 +10,7 @@ spec:
   secretName: learningcenter-cert-tls
   issuerRef:
     kind: ClusterIssuer
-    name: vault-cluster-issuer
+    name: letsencrypt-contour-cluster-issuer
   dnsNames:
   - #@ "*." + data.values.tap.domains.learningcenter
 ---

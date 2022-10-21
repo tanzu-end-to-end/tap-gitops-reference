@@ -15,4 +15,4 @@ stringData:
       #@overlay/match missing_ok=True
       issuerRef: |
         kind: ClusterIssuer
-        name: vault-cluster-issuer
+        name: letsencrypt-contour-cluster-issuer

@@ -42,6 +42,6 @@ spec:
   secretName: dotnet-todos-cert-tls
   issuerRef:
     kind: ClusterIssuer
-    name: vault-cluster-issuer
+    name: letsencrypt-contour-cluster-issuer
   dnsNames:
   - #@ "dotnet-todos." + data.values.tap.domains.base
