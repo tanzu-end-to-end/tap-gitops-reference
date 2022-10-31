@@ -19,10 +19,10 @@ spec:
   #
   # Data Pod features
   #
-  storageClassName: vc01cl01-t0compute
+  storageClassName: gp2
   storageSize: 800M
   cpu: "0.2"
   memory: 800Mi
  
-  monitorStorageClassName: vc01cl01-t0compute
+  monitorStorageClassName: gp2
   monitorStorageSize: 1G
