@@ -9,7 +9,6 @@ appliveview_connector:
   backend:
     host: appliveview.ref.appref.end2end.link
     ingressEnabled: true
-    caCertData: #@ data.values.tap.ca
 cnrs:
   domain_name: #@ data.values.tap.domains.base
   ingress:
@@ -27,7 +26,6 @@ buildservice:
   enable_automatic_dependency_updates: true
 supply_chain: basic
 shared:
-  ca_cert_data: #@ data.values.tap.credentials.registry.ca_cert_data
   ingress_domain: #@ data.values.tap.domains.base
 learningcenter:
   ingressSecret: 
