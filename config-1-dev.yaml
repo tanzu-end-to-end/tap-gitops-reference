@@ -8,10 +8,10 @@ paths:
  - clusters/full/config
 tap:
   registry:
-    host: harbor.h2o-4-1396.h2o.vmware.com
+    host: registry.gcp.ellin.net
     location: jeff/tbs
   supplychainregistry:
-    host: harbor.h2o-4-1396.h2o.vmware.com
+    host: registry.gcp.ellin.net
     location: jeff/sc
   base:
     domain: 1-devt.appref.end2end.link

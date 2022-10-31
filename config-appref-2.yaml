@@ -8,10 +8,10 @@ paths:
   - clusters/appref-2/config
 tap:
   registry:
-    host: harbor.h2o-4-1396.h2o.vmware.com
+    host: registry.gcp.ellin.net
     location: tap/tbs
   supplychainregistry:
-    host: harbor.h2o-4-1396.h2o.vmware.com
+    host: registry.gcp.ellin.net
     location: tap/sc
   base:
     domain: run.appref.end2end.link
