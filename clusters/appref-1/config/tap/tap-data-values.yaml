@@ -7,9 +7,8 @@ profile: full
 ceip_policy_disclosed: true #! Installation fails if this is set to 'false'
 appliveview_connector:
   backend:
-    host: #@ data.values.tap.appliveview_connector
+    host: appliveview.ref.appref.end2end.link
     ingressEnabled: true
-    caCertData: #@ data.values.tap.ca
 buildservice:
   kp_default_repository: #@ "{}/{}".format(data.values.tap.credentials.registry.host, data.values.tap.credentials.registry.repositories.buildService)
   kp_default_repository_username: #@ data.values.tap.credentials.registry.username
