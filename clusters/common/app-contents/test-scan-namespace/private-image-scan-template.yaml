@@ -157,6 +157,3 @@ spec:
       - name: metadata-store-ca-cert
         secret:
           secretName: store-ca-cert
-      - name: ca-cert
-        configMap:
-          name: grype-ca
