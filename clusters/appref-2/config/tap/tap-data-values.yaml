@@ -73,11 +73,6 @@ ootb_supply_chain_basic:
     repository: #@ data.values.tap.credentials.supplychainregistry.repositories.ootbSupplyChain
   gitops:
     ssh_secret: ""
-appliveview:
-  tls:
-    namespace: tap-install
-    #! Not consistent with others
-    secretName: tap-tls-secret
 metadata_store:
   app_service_type: ClusterIP
 accelerator:
