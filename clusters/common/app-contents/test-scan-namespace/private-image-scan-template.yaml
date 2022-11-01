@@ -58,9 +58,6 @@ spec:
           - mountPath: /.docker
             name: registry-cred
             readOnly: true
-          - name: ca-cert
-            mountPath: /etc/ssl/certs/custom-ca.crt
-            subPath: ca.crt
           - mountPath: /.cache
             name: cache
             readOnly: false
