@@ -9,6 +9,7 @@ appliveview_connector:
   backend:
     host: appliveview.ref.appref.end2end.link
     ingressEnabled: true
+    caCertData: ""
 cnrs:
   domain_name: #@ data.values.tap.domains.base
   ingress:
