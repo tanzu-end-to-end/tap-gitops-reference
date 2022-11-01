@@ -151,6 +151,7 @@ excluded_packages:
 - service-bindings.labs.vmware.com
 - services-toolkit.tanzu.vmware.com
 - ootb-delivery-basic.tanzu.vmware.com
+- policy.apps.tanzu.vmware.com
 package_overlays:
 - name:  tap-gui
   secrets:
