@@ -21,7 +21,7 @@ spec:
           - name: source-revision
         steps:
           - name: test
-            image: gradle
+            image: registry.gcp.ellin.net/library/gradle
             script: |-
               cd `mktemp -d`
               # Added -m due to issue with rosource plugin complaining about
