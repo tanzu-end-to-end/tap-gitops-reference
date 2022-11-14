@@ -79,7 +79,7 @@ spec:
       value:
         ca_cert_data: ""
         repository: jeff/sc
-        server: harbor.h2o-4-1396.h2o.vmware.com
+        server: registry.gcp.ellin.net
     - default: default
       name: clusterBuilder
     - default: ./Dockerfile
@@ -144,7 +144,7 @@ spec:
       value:
         ca_cert_data: ""
         repository: jeff/sc
-        server: harbor.h2o-4-1396.h2o.vmware.com
+        server: registry.gcp.ellin.net
     templateRef:
       kind: ClusterTemplate
       name: config-writer-and-pull-requester-template
