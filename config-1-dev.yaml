@@ -2,16 +2,16 @@
 catalog: https://github.com/tanzu-end-to-end/acme-catalog/blob/main/catalog-info.yaml
 git:
   url: https://github.com/tanzu-end-to-end/tap-gitops-reference
-  ref: origin/dev
+  ref: origin/h2o
 paths:
  - clusters/common/config
  - clusters/full/config
 tap:
   registry:
     host: registry.gcp.ellin.net
-    location: jeff/tbs
+    location: tap/tbs
   supplychainregistry:
     host: registry.gcp.ellin.net
-    location: jeff/sc
+    location: tap/sc
   base:
     domain: 1-devt.appref.end2end.link
