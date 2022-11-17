@@ -118,6 +118,7 @@ accelerator:
 excluded_packages:
 - cert-manager.tanzu.vmware.com
 - contour.tanzu.vmware.com
+- image-policy-webhook.signing.apps.tanzu.vmware.com
 package_overlays:
 - name:  tap-gui
   secrets:
