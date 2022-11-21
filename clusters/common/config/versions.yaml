@@ -6,7 +6,7 @@ externaldns:
   version: "0.10.0+vmware.1-tkg.1"
   namespace: tap-install
 contour:
-  version: "1.22.0+tap.5"
+  version: "1.22.0+tap.4"
   namespace: tap-install
 certmanager:
   version: "1.7.2+tap.1"
