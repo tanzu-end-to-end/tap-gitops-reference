@@ -2,7 +2,7 @@ apiVersion: eksctl.io/v1alpha5
 kind: ClusterConfig
 
 metadata:
-  name: tap-bug-bash-build
+  name: tap-bug-bash-iterate
   region: us-east-2
 
 

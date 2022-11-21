@@ -1,9 +1,9 @@
 clusters:
   build:
-    name: tap-bug-bash-build
+    name: tap-bug-bash-iterate
     config: eks-build.yaml
     region: us-east-2
-    context: arn:aws:eks:us-east-2:266463974589:cluster/tap-bug-bash-build
+    context: arn:aws:eks:us-east-2:266463974589:cluster/tap-bug-bash-iterate
   view:
     name: tap-bug-bash-view
     config: eks-view.yaml
