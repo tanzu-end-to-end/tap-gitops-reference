@@ -4,7 +4,7 @@
 #@ def config():
 envoy:
   service: 
-    type: LoadBalancer
+    type: NodePort
     externalTrafficPolicy: Local
     annotations:
       #@ if hasattr(data.values.tap.domains, "learningcenter"):
