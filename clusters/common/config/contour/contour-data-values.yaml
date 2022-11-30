@@ -9,7 +9,11 @@ envoy:
     #!externalTrafficPolicy: Local
     annotations:
       external-dns.alpha.kubernetes.io/target: "34.135.228.211"
-
+      #@ if hasattr(data.values.tap.domains, "learningcenter"):
+      external-dns.alpha.kubernetes.io/hostname: #@ "*." + data.values.tap.domains.base + ",*." + data.values.tap.domains.learningcenter
+      #@ else:
+      external-dns.alpha.kubernetes.io/hostname: #@ "*." + data.values.tap.domains.base
+      #@ end
 #@ end
 ---
 apiVersion: v1
@@ -22,14 +26,3 @@ metadata:
 type: Opaque
 stringData:
   values.yml: #@ yaml.encode(config())
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: ip
-  annotations:
-    external-dns.alpha.kubernetes.io/hostname: "*.2-devt.appref.end2end.link"
-    external-dns.alpha.kubernetes.io/target: '34.135.228.211'
-spec:
-  rules:
-    - host: '*.2-devt.appref.end2end.link'
