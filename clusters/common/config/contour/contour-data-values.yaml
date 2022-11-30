@@ -4,7 +4,7 @@
 #@ def config():
 envoy:
   service: 
-    type: NodePort
+    type: LoadBalancer
 
     #!externalTrafficPolicy: Local
     annotations:
