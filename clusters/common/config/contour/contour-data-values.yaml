@@ -32,8 +32,8 @@ kind: Ingress
 metadata:
   name: ip
   annotations:
-    external-dns.alpha.kubernetes.io/hostname: "*.3-devt.appref.end2end.link"
+    external-dns.alpha.kubernetes.io/hostname: "*.2-devt.appref.end2end.link"
     external-dns.alpha.kubernetes.io/target: '34.135.228.211'
 spec:
   rules:
-    - host: '*.3-devt.appref.end2end.link'
+    - host: '*.2-devt.appref.end2end.link'
