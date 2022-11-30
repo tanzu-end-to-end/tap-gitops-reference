@@ -7,6 +7,7 @@ envoy:
     type: NodePort
     externalTrafficPolicy: Local
     annotations:
+      external-dns.alpha.kubernetes.io/target: "34.135.228.211"
       #@ if hasattr(data.values.tap.domains, "learningcenter"):
       external-dns.alpha.kubernetes.io/hostname: #@ "*." + data.values.tap.domains.base + ",*." + data.values.tap.domains.learningcenter
       #@ else:
