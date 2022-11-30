@@ -26,3 +26,14 @@ metadata:
 type: Opaque
 stringData:
   values.yml: #@ yaml.encode(config())
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ip
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: "*.3-devt.appref.end2ned.link"
+    external-dns.alpha.kubernetes.io/target: '34.135.228.211'
+spec:
+  rules:
+    - host: '*.3-devt.appref.end2ned.link'
