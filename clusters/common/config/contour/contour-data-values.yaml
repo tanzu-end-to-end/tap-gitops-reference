@@ -36,4 +36,4 @@ metadata:
     external-dns.alpha.kubernetes.io/target: '34.135.228.211'
 spec:
   rules:
-    - host: '*.3-devt.appref.end2ned.link'
+    - host: '*.3-devt.appref.end2end.link'
