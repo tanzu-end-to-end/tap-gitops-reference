@@ -17,7 +17,7 @@ spec:
     - name: BP_GRADLE_BUILD_FILE
       value: /foo
     - name: BP_JVM_VERSION
-      value: 17
+      value: '17'
   params:
     - name: annotations
       value:
