@@ -16,6 +16,8 @@ spec:
     #! Compensate for the fact that the project has both gradle and maven.  This helps coach buildpack to use gradle specifically.
     - name: BP_GRADLE_BUILD_FILE
       value: /foo
+    - name: BP_JVM_VERSION
+      value: 17
   params:
     - name: annotations
       value:
