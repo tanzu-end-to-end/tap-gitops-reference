@@ -27,6 +27,9 @@ spec:
       value: nginx
     - name: BP_WEB_SERVER_ROOT
       value: dist
+    #! openssl 3.0 doesn't work
+    - name: NODE_OPTIONS
+      value: --openssl-legacy-provider
   source:
     git:
       url: https://github.com/tanzu-end-to-end/trp-dotnet-employee-todo-list-app.git
