@@ -42,6 +42,10 @@ tap_gui:
             clientId: #@ data.values.appsso.clientId
             clientSecret: #@ data.values.appsso.clientSecret
             audience: #@ data.values.appsso.audience
+        github:
+          development:
+            clientId: #@ data.values.git.clientid
+            clientSecret: #@ data.values.git.clientsecret
     techdocs:
       builder: 'external'
       publisher:
