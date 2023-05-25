@@ -22,6 +22,7 @@ buildservice:
 supply_chain: basic
 shared:
   ingress_domain: #@ data.values.tap.domains.base
+  ingress_issuer: letsencrypt-contour-cluster-issuer
 learningcenter:
   ingressSecret: 
     secretName:  learningcenter-cert-tls
