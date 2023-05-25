@@ -17,7 +17,8 @@ cnrs:
       namespace: tanzu-system-ingress
 buildservice:
   kp_default_repository: #@ "{}/{}".format(data.values.tap.credentials.registry.host, data.values.tap.credentials.registry.repositories.buildService)
- 
+  kp_default_repository_username: #@ data.values.tap.credentials.registry.username
+  kp_default_repository_password: #@ data.values.tap.credentials.registry.password
 supply_chain: basic
 shared:
   ingress_domain: #@ data.values.tap.domains.base
