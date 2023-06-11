@@ -17,7 +17,8 @@ spec:
   requireUserConsent: true
   redirectURIs:
     #! Final portion of the url needs to match the serviceClaim name in the workload
-    - #@ "https://appsso-starter-java.canary-test." + data.values.tap.domains.base + "/login/oauth2/code/sso-client"
+    #!- #@ "https://appsso-starter-java.canary-test." + data.values.tap.domains.base + "/login/oauth2/code/sso-client"
+    - "https://appsso-starter-java.canary-test.run.amer.end2end.link/login/oauth2/code/sso-client"
   scopes:
     - name: openid
 ---

@@ -3,5 +3,5 @@
 #@overlay/match-child-defaults missing_ok=True
 ---
 tap:
-  version: "1.5.1"
+  version: "1.6.0-build.43"
   namespace: tap-install

@@ -1,0 +1,22 @@
+kind: Certificate
+apiVersion: cert-manager.io/v1
+metadata:
+  name: rsa-cert-2048
+  namespace: acm-pca-lab-demo
+spec:
+  commonName: "*.ng.vmw-ellin.link"
+  dnsNames:
+    - "*.ng.vmw-ellin.link"
+  duration: 2160h0m0s
+  issuerRef:
+    group: awspca.cert-manager.io
+    kind: AWSPCAClusterIssuer
+    name: demo-test-root-ca
+  renewBefore: 360h0m0s
+  secretName: rsa-example-cert-2048
+  usages:
+    - server auth
+    - client auth
+  privateKey:
+    algorithm: "RSA"
+    size: 2048
